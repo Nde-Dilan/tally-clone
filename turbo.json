@@ -4,6 +4,8 @@
   "globalEnv": [
     "NODE_ENV",
     "AUTH_PROVIDER",
+    "ADMIN_PASSWORD",
+    "WEB_SESSION_SECRET",
     "DATABASE_URL",
     "EMAIL_PROVIDER",
     "EMAIL_HTTP_ENDPOINT",
@@ -20,6 +22,10 @@
     "NEXT_PUBLIC_API_URL"
   ],
   "tasks": {
+    "@quill/api#build": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
