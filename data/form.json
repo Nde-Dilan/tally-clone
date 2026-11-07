@@ -1,0 +1,3866 @@
+{
+  "status": "PUBLISHED",
+  "blocks": [
+    {
+      "uuid": "78f986c6-dc7a-443a-bca9-f9fd8933dc39",
+      "type": "FORM_TITLE",
+      "groupUuid": "78f986c6-dc7a-443a-bca9-f9fd8933dc39",
+      "groupType": "TEXT",
+      "payload": {
+        "title": "Kigali Student Housing Survey",
+        "html": "Kigali Student Housing Survey"
+      }
+    },
+    {
+      "uuid": "c39c3b69-fbfe-442e-9c3f-e858e41626c6",
+      "type": "HIDDEN_FIELDS",
+      "groupUuid": "c39c3b69-fbfe-442e-9c3f-e858e41626c6",
+      "groupType": "HIDDEN_FIELDS",
+      "payload": {
+        "hiddenFields": [
+          {
+            "uuid": "6e552065-f184-490c-bd5c-28c0af28248a",
+            "name": "source"
+          },
+          {
+            "uuid": "f93bf235-318d-4c41-8e34-305f0c9e9739",
+            "name": "collector"
+          },
+          {
+            "uuid": "2fb1e33a-d985-427c-9535-e7b80d859cc5",
+            "name": "ref"
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "0af73abf-c987-4713-811c-48bb18b68ae9",
+      "type": "TEXT",
+      "groupUuid": "0af73abf-c987-4713-811c-48bb18b68ae9",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<b>Help CMU students find fair housing in Kigali.</b><br>We are CMU students building the first open map of student rent prices in Kigali. Share one place you rented (or are looking for) and <b>we will send you the results</b>: a price map by neighbourhood.<br><br>⏱ About 6 minutes (about 3 minutes if you are adding another stay). One question per screen: you can go back at any time to change an answer.<br>🔒 Anonymous. Landlords, agents and unit numbers are never published. Results are shown in aggregate only."
+      }
+    },
+    {
+      "uuid": "aa20fdcd-66e5-4179-b2f6-610ffcdef993",
+      "type": "TITLE",
+      "groupUuid": "aa20fdcd-66e5-4179-b2f6-610ffcdef993",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Consent"
+      }
+    },
+    {
+      "uuid": "1f7eef1a-abc7-4e9f-8968-4bd3cf92d789",
+      "type": "CHECKBOX",
+      "groupUuid": "61c94fe6-18b3-4543-b0a7-2e0d13f75ede",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": true,
+        "text": "I agree to take part. My answers can be used for this research in anonymised form.",
+        "name": "consent"
+      }
+    },
+    {
+      "uuid": "dd11b594-8c4d-4276-9ebd-4fd142b0f765",
+      "type": "PAGE_BREAK",
+      "groupUuid": "dd11b594-8c4d-4276-9ebd-4fd142b0f765",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_first_submission",
+        "button": {
+          "label": "Next"
+        },
+        "index": 0,
+        "isFirst": true,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "a3fcb4cd-590e-438c-a189-80acb705fc2d",
+      "type": "TITLE",
+      "groupUuid": "a3fcb4cd-590e-438c-a189-80acb705fc2d",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Is this your first time answering this survey?"
+      }
+    },
+    {
+      "uuid": "58394dd4-0426-4a9c-abf4-75f34331a193",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes, first time",
+        "name": "first_submission"
+      }
+    },
+    {
+      "uuid": "bd0b4ac1-ffe4-49f1-a21d-53edbd80550f",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No, I am adding another place",
+        "name": "first_submission"
+      }
+    },
+    {
+      "uuid": "65884015-76e2-42e6-ae86-3389b70f24bc",
+      "type": "PAGE_BREAK",
+      "groupUuid": "65884015-76e2-42e6-ae86-3389b70f24bc",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_ref_code",
+        "button": {
+          "label": "Next"
+        },
+        "index": 1,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "7ad71a6f-48e0-4f3f-bcda-b12621b8c7f1",
+      "type": "TITLE",
+      "groupUuid": "7ad71a6f-48e0-4f3f-bcda-b12621b8c7f1",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Do you have a referral code? (optional)"
+      }
+    },
+    {
+      "uuid": "4865d131-0edd-4ae9-818c-5a619184d1f9",
+      "type": "TEXT",
+      "groupUuid": "4865d131-0edd-4ae9-818c-5a619184d1f9",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>A friend who already took this survey may have given you a code. Leave empty if you have none.</i>"
+      }
+    },
+    {
+      "uuid": "6d835a44-1f21-439b-8df8-7ed87e3aeb5a",
+      "type": "INPUT_TEXT",
+      "groupUuid": "6d835a44-1f21-439b-8df8-7ed87e3aeb5a",
+      "groupType": "INPUT_TEXT",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "e.g. AAI07",
+        "hasMaxCharacters": true,
+        "maxCharacters": 12,
+        "hasDefaultAnswer": true,
+        "defaultAnswer": {
+          "uuid": "2fb1e33a-d985-427c-9535-e7b80d859cc5",
+          "type": "HIDDEN_FIELD",
+          "questionType": "HIDDEN_FIELDS",
+          "blockGroupUuid": "c39c3b69-fbfe-442e-9c3f-e858e41626c6",
+          "title": "ref"
+        },
+        "name": "ref_code"
+      }
+    },
+    {
+      "uuid": "29b3477e-5ed1-43fe-8482-51e04de30490",
+      "type": "PAGE_BREAK",
+      "groupUuid": "29b3477e-5ed1-43fe-8482-51e04de30490",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_nationality_group",
+        "button": {
+          "label": "Next"
+        },
+        "index": 2,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "256e27cd-f438-47c2-b9fb-0a4b541f740d",
+      "type": "HEADING_2",
+      "groupUuid": "256e27cd-f438-47c2-b9fb-0a4b541f740d",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "About you"
+      }
+    },
+    {
+      "uuid": "219ec688-0d86-4c35-89de-138cc48d51fb",
+      "type": "TITLE",
+      "groupUuid": "219ec688-0d86-4c35-89de-138cc48d51fb",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Your nationality"
+      }
+    },
+    {
+      "uuid": "012e076f-940a-4a0e-8673-9b40ed41a071",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "98dabd2b-9159-496e-ac90-5bc260a6f987",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Rwandan",
+        "name": "nationality_group"
+      }
+    },
+    {
+      "uuid": "065546e6-6c29-4389-995b-72dddb08bc2d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "98dabd2b-9159-496e-ac90-5bc260a6f987",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Other African",
+        "name": "nationality_group"
+      }
+    },
+    {
+      "uuid": "943dffa4-fdb9-49a4-a0e5-491129c963d4",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "98dabd2b-9159-496e-ac90-5bc260a6f987",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Non-African",
+        "name": "nationality_group"
+      }
+    },
+    {
+      "uuid": "d7bef66b-c0b4-46dd-9533-2bea0a24cdee",
+      "type": "PAGE_BREAK",
+      "groupUuid": "d7bef66b-c0b4-46dd-9533-2bea0a24cdee",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_nationality_country",
+        "button": {
+          "label": "Next"
+        },
+        "index": 3,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "3776b4df-497e-4d59-9aff-c244c130c89c",
+      "type": "TITLE",
+      "groupUuid": "3776b4df-497e-4d59-9aff-c244c130c89c",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Which country? (optional)"
+      }
+    },
+    {
+      "uuid": "0476534c-e12c-4518-85a5-9b37fc9a6143",
+      "type": "INPUT_TEXT",
+      "groupUuid": "0476534c-e12c-4518-85a5-9b37fc9a6143",
+      "groupType": "INPUT_TEXT",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "e.g. Nigeria",
+        "name": "nationality_country"
+      }
+    },
+    {
+      "uuid": "13a03537-005c-4138-b3c5-e5a4a34755a1",
+      "type": "PAGE_BREAK",
+      "groupUuid": "13a03537-005c-4138-b3c5-e5a4a34755a1",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_intake_year",
+        "button": {
+          "label": "Next"
+        },
+        "index": 4,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "ac935655-b9c0-4099-bb4f-2012906dd9c3",
+      "type": "TITLE",
+      "groupUuid": "ac935655-b9c0-4099-bb4f-2012906dd9c3",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Your CMU intake year"
+      }
+    },
+    {
+      "uuid": "4f63b55f-40b9-4ff0-9177-f9deeb895228",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "2020",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "003f0ff2-03d0-4e37-82f5-1f800a57141c",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2021",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "d996934f-ffdd-46c0-ba0d-1e85197701cb",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2022",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "b9c0510b-8c66-4ea0-97a6-2b10af08835d",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2023",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "d3bccde8-ee10-423c-91b7-430738e84e69",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2024",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "1bd55d24-2749-442d-ac38-a3e344299697",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2025",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "a6a19470-c683-454d-a5b0-22c93ad9dbdb",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "2026",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "266e468b-2808-46f9-8822-70af50a77202",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "c0a72dc3-4e1e-41f2-8adc-751608502f1d",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 7,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Not yet enrolled",
+        "name": "intake_year",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "088d3b63-8a94-43cd-b4fe-53faae600fd7",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "088d3b63-8a94-43cd-b4fe-53faae600fd7",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "e244546f-75f5-4186-b3c1-6f477d236814",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+                "title": "Is this your first time answering this survey?"
+              },
+              "comparison": "IS",
+              "value": "bd0b4ac1-ffe4-49f1-a21d-53edbd80550f"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "a78be8f9-4a68-4741-9873-1c4a54af9747",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "ca948b99-981a-489b-a7df-623847881ef0"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "ca948b99-981a-489b-a7df-623847881ef0",
+      "type": "PAGE_BREAK",
+      "groupUuid": "ca948b99-981a-489b-a7df-623847881ef0",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_gps_location",
+        "button": {
+          "label": "Next"
+        },
+        "index": 5,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "4b558450-ec34-4d9f-bc25-5274257689eb",
+      "type": "HEADING_2",
+      "groupUuid": "4b558450-ec34-4d9f-bc25-5274257689eb",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "The place you rented"
+      }
+    },
+    {
+      "uuid": "70ad5bc3-c230-4598-86db-0218406278e2",
+      "type": "TEXT",
+      "groupUuid": "70ad5bc3-c230-4598-86db-0218406278e2",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "Tell us about <b>one</b> place you rented. You can add more at the end."
+      }
+    },
+    {
+      "uuid": "d648ce9d-ae17-49eb-8c82-300b6edb09fc",
+      "type": "TITLE",
+      "groupUuid": "d648ce9d-ae17-49eb-8c82-300b6edb09fc",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Google Maps link of the place"
+      }
+    },
+    {
+      "uuid": "ddc553a3-5614-488c-9b42-b424ed044734",
+      "type": "TEXT",
+      "groupUuid": "ddc553a3-5614-488c-9b42-b424ed044734",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Open Google Maps, drop a pin on the building, tap Share, then Copy link.</i>"
+      }
+    },
+    {
+      "uuid": "e78a2da5-32d6-4fb6-8546-9f6de9fa2dd7",
+      "type": "INPUT_LINK",
+      "groupUuid": "e78a2da5-32d6-4fb6-8546-9f6de9fa2dd7",
+      "groupType": "INPUT_LINK",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "https://maps.app.goo.gl/…",
+        "name": "gps_location"
+      }
+    },
+    {
+      "uuid": "918fd5ed-f533-48a9-83ac-779c530a39bb",
+      "type": "PAGE_BREAK",
+      "groupUuid": "918fd5ed-f533-48a9-83ac-779c530a39bb",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_neighbourhood",
+        "button": {
+          "label": "Next"
+        },
+        "index": 6,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "8449b201-7f28-4e5e-966b-19c4a058bccb",
+      "type": "TITLE",
+      "groupUuid": "8449b201-7f28-4e5e-966b-19c4a058bccb",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Neighbourhood"
+      }
+    },
+    {
+      "uuid": "259e9d7c-7465-41aa-a148-0657532d4e5a",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Bumbogo / Kigali Innovation City",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "3cbbad85-d639-4fef-a207-ca2468cf7700",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Gacuriro",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "47636b36-4dba-473f-8869-006143362d32",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Gikondo",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "50150e58-f33f-4c6b-bc3c-f5e8b353a880",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Gisozi",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "875b1d8d-f1cc-4b90-89a7-3ea6b07a0b63",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kabeza",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "4431caaf-55d8-42d2-847b-85dcb604516f",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kacyiru",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "878072fb-3ec7-435f-a83b-fb61fdd8f613",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kagugu",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "0bbac278-dffb-44ac-9616-2fb3f51601bf",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 7,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kanombe",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "cb98030c-c209-4c75-bf96-1e90a8428546",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 8,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kibagabaga",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "c00b1483-2315-4cbf-8952-ea4e9802e5f8",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 9,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kicukiro",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "d5f973bc-afc6-46d9-a95d-adefd1c75342",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 10,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kimihurura",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "5b925458-4099-4751-b102-35ef33f2198c",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 11,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kimironko",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "7d7344e1-8649-4e81-8cca-7bcc64be244f",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 12,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kinyinya",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "07873b90-8aca-41a5-942d-ffa283e159f0",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 13,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kisimenti",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "f337fa72-17e5-4c95-b4d2-420b34feba91",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 14,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Kiyovu",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "835d9617-1576-45ab-ac2f-da5008e4eada",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 15,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Nyamirambo",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "15c4b470-d31e-4870-b0aa-6056d1f2efa6",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 16,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Nyarutarama",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "9e58adf4-bb09-4dad-bb36-d3a0c1f9f3bf",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 17,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Remera",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "08d1971a-c800-4e0f-916c-4f321f04d21e",
+      "type": "DROPDOWN_OPTION",
+      "groupUuid": "fad5631b-60dd-4c66-b9ce-a5b3b70bdf0b",
+      "groupType": "DROPDOWN",
+      "payload": {
+        "isRequired": true,
+        "index": 18,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "neighbourhood",
+        "placeholder": "Select…"
+      }
+    },
+    {
+      "uuid": "d3cdd705-cc89-477c-b544-77fbba033c4f",
+      "type": "PAGE_BREAK",
+      "groupUuid": "d3cdd705-cc89-477c-b544-77fbba033c4f",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_property_type",
+        "button": {
+          "label": "Next"
+        },
+        "index": 7,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "d49192ca-c3bc-449d-8a6d-2a7b3d401df8",
+      "type": "TITLE",
+      "groupUuid": "d49192ca-c3bc-449d-8a6d-2a7b3d401df8",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Type of place"
+      }
+    },
+    {
+      "uuid": "8c8760c2-b78b-40ea-b454-d52997d677d9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "28c64403-94ef-453a-ad93-d28a685bc2bb",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Apartment in a named building",
+        "name": "property_type"
+      }
+    },
+    {
+      "uuid": "15d143ce-f65f-470e-a797-ede63495a615",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "28c64403-94ef-453a-ad93-d28a685bc2bb",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Standalone house",
+        "name": "property_type"
+      }
+    },
+    {
+      "uuid": "4ee35841-e65f-4f50-b1b1-4492e4cf9bb7",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "28c64403-94ef-453a-ad93-d28a685bc2bb",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Room in a family compound",
+        "name": "property_type"
+      }
+    },
+    {
+      "uuid": "05475f05-101a-4066-b0ce-b07fc39e6f89",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "05475f05-101a-4066-b0ce-b07fc39e6f89",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "369e65a0-cfe6-476b-8bdc-d092889db88c",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "28c64403-94ef-453a-ad93-d28a685bc2bb",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "28c64403-94ef-453a-ad93-d28a685bc2bb",
+                "title": "Type of place"
+              },
+              "comparison": "IS_NOT",
+              "value": "8c8760c2-b78b-40ea-b454-d52997d677d9"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "6b3d2697-2e96-47d7-aae5-850dab62ecea",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "59e7437b-ac9f-49e4-b7bf-b4679430471b"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "a852babd-0d8b-45b7-8720-263cc9d87baa",
+      "type": "PAGE_BREAK",
+      "groupUuid": "a852babd-0d8b-45b7-8720-263cc9d87baa",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_apartment_name",
+        "button": {
+          "label": "Next"
+        },
+        "index": 8,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "261e1a15-5bc5-4bef-a252-73ada6159861",
+      "type": "TITLE",
+      "groupUuid": "261e1a15-5bc5-4bef-a252-73ada6159861",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Building / apartment name"
+      }
+    },
+    {
+      "uuid": "2e6666f3-a4f5-4e17-9997-ac6d7d32324b",
+      "type": "INPUT_TEXT",
+      "groupUuid": "2e6666f3-a4f5-4e17-9997-ac6d7d32324b",
+      "groupType": "INPUT_TEXT",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "e.g. Kigali Heights",
+        "name": "apartment_name"
+      }
+    },
+    {
+      "uuid": "ef021b77-004f-425a-84b5-d97180118ed9",
+      "type": "PAGE_BREAK",
+      "groupUuid": "ef021b77-004f-425a-84b5-d97180118ed9",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_room_unit_number",
+        "button": {
+          "label": "Next"
+        },
+        "index": 9,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "ff890db1-d6c9-4210-b5f5-f35579a78fae",
+      "type": "TITLE",
+      "groupUuid": "ff890db1-d6c9-4210-b5f5-f35579a78fae",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Room / unit number (optional)"
+      }
+    },
+    {
+      "uuid": "3d764910-2bbc-495c-b319-c07acffd0729",
+      "type": "TEXT",
+      "groupUuid": "3d764910-2bbc-495c-b319-c07acffd0729",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Never published.</i>"
+      }
+    },
+    {
+      "uuid": "466d10b7-d360-410a-a899-026c9fb65234",
+      "type": "INPUT_TEXT",
+      "groupUuid": "466d10b7-d360-410a-a899-026c9fb65234",
+      "groupType": "INPUT_TEXT",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "e.g. A3",
+        "hasMaxCharacters": true,
+        "maxCharacters": 5,
+        "name": "room_unit_number"
+      }
+    },
+    {
+      "uuid": "59e7437b-ac9f-49e4-b7bf-b4679430471b",
+      "type": "PAGE_BREAK",
+      "groupUuid": "59e7437b-ac9f-49e4-b7bf-b4679430471b",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_number_of_rooms",
+        "button": {
+          "label": "Next"
+        },
+        "index": 10,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "02fc115d-acea-4c66-9aaa-42ffa5f87407",
+      "type": "TITLE",
+      "groupUuid": "02fc115d-acea-4c66-9aaa-42ffa5f87407",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Number of rooms (bedrooms) in the unit"
+      }
+    },
+    {
+      "uuid": "f9824a8a-e1b0-416e-9f37-69c69a11cad4",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "f9824a8a-e1b0-416e-9f37-69c69a11cad4",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 1,
+        "hasMaxNumber": true,
+        "maxNumber": 8,
+        "name": "number_of_rooms"
+      }
+    },
+    {
+      "uuid": "9a0afe91-43b9-49e2-9405-699f97c430e8",
+      "type": "PAGE_BREAK",
+      "groupUuid": "9a0afe91-43b9-49e2-9405-699f97c430e8",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_occupants",
+        "button": {
+          "label": "Next"
+        },
+        "index": 11,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "04e32cc2-c1af-4339-81a5-fca4e5c8490e",
+      "type": "TITLE",
+      "groupUuid": "04e32cc2-c1af-4339-81a5-fca4e5c8490e",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How many people lived there, including you?"
+      }
+    },
+    {
+      "uuid": "db4a8f62-74f2-4d70-9dd0-28959a99560d",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "db4a8f62-74f2-4d70-9dd0-28959a99560d",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 1,
+        "hasMaxNumber": true,
+        "maxNumber": 8,
+        "name": "occupants"
+      }
+    },
+    {
+      "uuid": "13e42845-cf5a-4cf5-879e-f69eaa3cba5b",
+      "type": "PAGE_BREAK",
+      "groupUuid": "13e42845-cf5a-4cf5-879e-f69eaa3cba5b",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_included_in_rent",
+        "button": {
+          "label": "Next"
+        },
+        "index": 12,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "2e1c281e-0810-458e-a610-0bd61abb4f7f",
+      "type": "HEADING_2",
+      "groupUuid": "2e1c281e-0810-458e-a610-0bd61abb4f7f",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "What was included"
+      }
+    },
+    {
+      "uuid": "4fed9224-ba9b-41d7-9f68-3864d061ffb6",
+      "type": "TITLE",
+      "groupUuid": "4fed9224-ba9b-41d7-9f68-3864d061ffb6",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "What was included in the rent?"
+      }
+    },
+    {
+      "uuid": "4943cfe0-cfe8-4ee9-9023-4f5f031bec07",
+      "type": "TEXT",
+      "groupUuid": "4943cfe0-cfe8-4ee9-9023-4f5f031bec07",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Tick all that apply. Leave empty if nothing was included.</i>"
+      }
+    },
+    {
+      "uuid": "7fe87e66-e5c9-4087-b6c9-dec95acf5314",
+      "type": "CHECKBOX",
+      "groupUuid": "40324227-85c3-46e2-a945-f9a32dd4bd74",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Wi-Fi",
+        "name": "included_in_rent"
+      }
+    },
+    {
+      "uuid": "8f0f8244-2feb-4a95-b4af-323c1cb3375f",
+      "type": "CHECKBOX",
+      "groupUuid": "40324227-85c3-46e2-a945-f9a32dd4bd74",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Water",
+        "name": "included_in_rent"
+      }
+    },
+    {
+      "uuid": "d1ae1840-482c-4fee-95c9-f3aa710e7a8e",
+      "type": "CHECKBOX",
+      "groupUuid": "40324227-85c3-46e2-a945-f9a32dd4bd74",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Electricity",
+        "name": "included_in_rent"
+      }
+    },
+    {
+      "uuid": "6bb4044b-f643-4fe9-8de1-94054abe27f0",
+      "type": "CHECKBOX",
+      "groupUuid": "40324227-85c3-46e2-a945-f9a32dd4bd74",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Gas",
+        "name": "included_in_rent"
+      }
+    },
+    {
+      "uuid": "9ca5c047-f696-4268-97ef-40e39ab980f7",
+      "type": "CHECKBOX",
+      "groupUuid": "40324227-85c3-46e2-a945-f9a32dd4bd74",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 4,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Garbage collection",
+        "name": "included_in_rent"
+      }
+    },
+    {
+      "uuid": "380b0532-83de-4cf5-90d8-46005b61d113",
+      "type": "PAGE_BREAK",
+      "groupUuid": "380b0532-83de-4cf5-90d8-46005b61d113",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_furnishing",
+        "button": {
+          "label": "Next"
+        },
+        "index": 13,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "187a84a0-0aa2-4546-a3b0-c0c8665eac6b",
+      "type": "TITLE",
+      "groupUuid": "187a84a0-0aa2-4546-a3b0-c0c8665eac6b",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Furnishing"
+      }
+    },
+    {
+      "uuid": "056822ab-1445-44c4-8a16-2479940ebfa0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "01af3878-4fb0-498f-96c1-38d9f219a5e1",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Furnished",
+        "name": "furnishing"
+      }
+    },
+    {
+      "uuid": "a14f91b7-d02e-4b86-a234-ad7151a52161",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "01af3878-4fb0-498f-96c1-38d9f219a5e1",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Semi-furnished",
+        "name": "furnishing"
+      }
+    },
+    {
+      "uuid": "fd56a458-ee67-4645-93aa-cac9483e9055",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "01af3878-4fb0-498f-96c1-38d9f219a5e1",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Unfurnished",
+        "name": "furnishing"
+      }
+    },
+    {
+      "uuid": "96b34566-0c26-4b0e-8164-2e70fa95db6a",
+      "type": "PAGE_BREAK",
+      "groupUuid": "96b34566-0c26-4b0e-8164-2e70fa95db6a",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_asphalted_road",
+        "button": {
+          "label": "Next"
+        },
+        "index": 14,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "5adc5181-0ad7-46c3-98c2-1a3944882d46",
+      "type": "TITLE",
+      "groupUuid": "5adc5181-0ad7-46c3-98c2-1a3944882d46",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Is the road to the place paved?"
+      }
+    },
+    {
+      "uuid": "52d54d8c-d0ab-41db-b603-8dc9b0737628",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "8bae43c5-f180-4d3b-ba4d-76c8e3cd84d3",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "asphalted_road"
+      }
+    },
+    {
+      "uuid": "92802dd5-88ae-4e3e-a4f3-6f6848d4670e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "8bae43c5-f180-4d3b-ba4d-76c8e3cd84d3",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No",
+        "name": "asphalted_road"
+      }
+    },
+    {
+      "uuid": "ee3535d1-497d-4adb-95bf-d6efdce99278",
+      "type": "PAGE_BREAK",
+      "groupUuid": "ee3535d1-497d-4adb-95bf-d6efdce99278",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_period",
+        "button": {
+          "label": "Next"
+        },
+        "index": 15,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "bbdab092-77f1-4856-b222-da9c66ee92be",
+      "type": "HEADING_2",
+      "groupUuid": "bbdab092-77f1-4856-b222-da9c66ee92be",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "The deal and the price"
+      }
+    },
+    {
+      "uuid": "62125261-04db-4398-b389-1ba328f4346f",
+      "type": "TITLE",
+      "groupUuid": "62125261-04db-4398-b389-1ba328f4346f",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Which academic period was it for?"
+      }
+    },
+    {
+      "uuid": "25f4f66b-6585-4f1f-a9bf-2864cfe05580",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "e0f13189-2b48-4d58-b4e4-d2c6e5fec7aa",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Summer",
+        "name": "period"
+      }
+    },
+    {
+      "uuid": "b33433ff-6eff-4d23-a908-4c90d354d7ab",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "e0f13189-2b48-4d58-b4e4-d2c6e5fec7aa",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Fall",
+        "name": "period"
+      }
+    },
+    {
+      "uuid": "4f2f7d55-3f84-4b05-b564-4478c405b52f",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "e0f13189-2b48-4d58-b4e4-d2c6e5fec7aa",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Spring",
+        "name": "period"
+      }
+    },
+    {
+      "uuid": "d6a5519b-68f2-4c5a-a8bc-8bc7656892df",
+      "type": "PAGE_BREAK",
+      "groupUuid": "d6a5519b-68f2-4c5a-a8bc-8bc7656892df",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_start_date",
+        "button": {
+          "label": "Next"
+        },
+        "index": 16,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "8bc15ab5-f4b8-4041-82bb-6b37b36fd723",
+      "type": "TITLE",
+      "groupUuid": "8bc15ab5-f4b8-4041-82bb-6b37b36fd723",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Start date of the rental"
+      }
+    },
+    {
+      "uuid": "38b52b63-f169-47cd-80a7-bb580b80a5b6",
+      "type": "INPUT_DATE",
+      "groupUuid": "38b52b63-f169-47cd-80a7-bb580b80a5b6",
+      "groupType": "INPUT_DATE",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "format": "dd/MM/yyyy",
+        "name": "start_date"
+      }
+    },
+    {
+      "uuid": "f3aa79a3-ca55-4937-8353-d7976aee585b",
+      "type": "PAGE_BREAK",
+      "groupUuid": "f3aa79a3-ca55-4937-8353-d7976aee585b",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_duration_months",
+        "button": {
+          "label": "Next"
+        },
+        "index": 17,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "20b813ab-52ae-4875-82f1-f15258a9e22c",
+      "type": "TITLE",
+      "groupUuid": "20b813ab-52ae-4875-82f1-f15258a9e22c",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Duration of the deal (months)"
+      }
+    },
+    {
+      "uuid": "d08bbd11-48d1-4d8a-8fa2-62222db2388f",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "d08bbd11-48d1-4d8a-8fa2-62222db2388f",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 1,
+        "hasMaxNumber": true,
+        "maxNumber": 36,
+        "name": "duration_months"
+      }
+    },
+    {
+      "uuid": "047fe2ba-f7e7-4f93-9370-aeb7fdb9ccd9",
+      "type": "PAGE_BREAK",
+      "groupUuid": "047fe2ba-f7e7-4f93-9370-aeb7fdb9ccd9",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_negotiator",
+        "button": {
+          "label": "Next"
+        },
+        "index": 18,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "c6c24e2e-bd39-4026-b864-a62ea7e424bc",
+      "type": "TITLE",
+      "groupUuid": "c6c24e2e-bd39-4026-b864-a62ea7e424bc",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Who negotiated the deal with the landlord or agent?"
+      }
+    },
+    {
+      "uuid": "02709867-57ef-424c-9b91-782af312de0b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ea2d187a-99d1-4f85-9b51-55f4b33bea46",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Myself alone",
+        "name": "negotiator"
+      }
+    },
+    {
+      "uuid": "5ca6cab5-b596-4206-a595-ff720f4e9ef0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ea2d187a-99d1-4f85-9b51-55f4b33bea46",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Myself, with a Rwandan friend or colleague",
+        "name": "negotiator"
+      }
+    },
+    {
+      "uuid": "1454c315-6965-4f89-9f50-74e1ad5d2cac",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ea2d187a-99d1-4f85-9b51-55f4b33bea46",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "A Rwandan person on my behalf",
+        "name": "negotiator"
+      }
+    },
+    {
+      "uuid": "df651e86-a8fd-4467-848f-bfd4450c5d73",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ea2d187a-99d1-4f85-9b51-55f4b33bea46",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": true,
+        "text": "A non-Rwandan friend or group",
+        "name": "negotiator"
+      }
+    },
+    {
+      "uuid": "fd2fac8f-6a65-43d0-930c-a75645306c7c",
+      "type": "PAGE_BREAK",
+      "groupUuid": "fd2fac8f-6a65-43d0-930c-a75645306c7c",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_agent_involved",
+        "button": {
+          "label": "Next"
+        },
+        "index": 19,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "2de51090-3cf6-4896-aea6-f9acedd9f604",
+      "type": "TITLE",
+      "groupUuid": "2de51090-3cf6-4896-aea6-f9acedd9f604",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Was an agent involved?"
+      }
+    },
+    {
+      "uuid": "79165403-daf0-4cc8-b27b-8cab90a85617",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "3d365840-09e1-44d2-bfae-20efd2dcc8b9",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "agent_involved"
+      }
+    },
+    {
+      "uuid": "753e9005-31c3-4254-8161-9a1e7d7f7982",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "3d365840-09e1-44d2-bfae-20efd2dcc8b9",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No",
+        "name": "agent_involved"
+      }
+    },
+    {
+      "uuid": "073987cc-16c6-499c-bc16-777b9f520553",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "073987cc-16c6-499c-bc16-777b9f520553",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "89a6bdeb-b9dd-450e-a214-67e5e20c2e18",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "3d365840-09e1-44d2-bfae-20efd2dcc8b9",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "3d365840-09e1-44d2-bfae-20efd2dcc8b9",
+                "title": "Was an agent involved?"
+              },
+              "comparison": "IS",
+              "value": "753e9005-31c3-4254-8161-9a1e7d7f7982"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "e831d546-2193-4987-9fff-fe4674e4757c",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "a2412ccf-7c6b-48bf-b24b-b07c89390068"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "a9de6dd3-711e-4ef4-88a4-5a4d7372eb40",
+      "type": "PAGE_BREAK",
+      "groupUuid": "a9de6dd3-711e-4ef4-88a4-5a4d7372eb40",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_commission_fee_rwf",
+        "button": {
+          "label": "Next"
+        },
+        "index": 20,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "b965ce18-afa8-454e-a7f9-0904133550cd",
+      "type": "TITLE",
+      "groupUuid": "b965ce18-afa8-454e-a7f9-0904133550cd",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Commission paid to the agent (RWF)"
+      }
+    },
+    {
+      "uuid": "67419142-8292-42e3-8c16-55b24e1be437",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "67419142-8292-42e3-8c16-55b24e1be437",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 0,
+        "format": "CUSTOM",
+        "suffix": " RWF",
+        "decimalSeparator": ".",
+        "thousandsSeparator": ",",
+        "name": "commission_fee_rwf"
+      }
+    },
+    {
+      "uuid": "a2412ccf-7c6b-48bf-b24b-b07c89390068",
+      "type": "PAGE_BREAK",
+      "groupUuid": "a2412ccf-7c6b-48bf-b24b-b07c89390068",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_asking_price_rwf",
+        "button": {
+          "label": "Next"
+        },
+        "index": 21,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "9a38de91-cf02-44fd-8797-7e44925564d2",
+      "type": "TITLE",
+      "groupUuid": "9a38de91-cf02-44fd-8797-7e44925564d2",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "First price quoted to you, per month (RWF, optional)"
+      }
+    },
+    {
+      "uuid": "05aa2dea-5a4b-4893-bde7-b6fbead7a329",
+      "type": "TEXT",
+      "groupUuid": "05aa2dea-5a4b-4893-bde7-b6fbead7a329",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Helps us understand how much prices change in negotiation.</i>"
+      }
+    },
+    {
+      "uuid": "8ba3a9de-1e62-4f2f-a305-281b538a82cb",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "8ba3a9de-1e62-4f2f-a305-281b538a82cb",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 0,
+        "format": "CUSTOM",
+        "suffix": " RWF",
+        "decimalSeparator": ".",
+        "thousandsSeparator": ",",
+        "name": "asking_price_rwf"
+      }
+    },
+    {
+      "uuid": "ceb08687-1d48-4c10-9222-313f47882493",
+      "type": "PAGE_BREAK",
+      "groupUuid": "ceb08687-1d48-4c10-9222-313f47882493",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_rent_price_rwf",
+        "button": {
+          "label": "Next"
+        },
+        "index": 22,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "d0a02f42-da4d-49b6-96bf-ff4516251d5a",
+      "type": "TITLE",
+      "groupUuid": "d0a02f42-da4d-49b6-96bf-ff4516251d5a",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Rent you finally paid, per month (RWF)"
+      }
+    },
+    {
+      "uuid": "6331682e-1acd-4059-a5a8-117532bdee73",
+      "type": "TEXT",
+      "groupUuid": "6331682e-1acd-4059-a5a8-117532bdee73",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Rent only; do not include the agent commission.</i>"
+      }
+    },
+    {
+      "uuid": "b7108d10-d94d-47a9-86c0-10046c7d7097",
+      "type": "INPUT_NUMBER",
+      "groupUuid": "b7108d10-d94d-47a9-86c0-10046c7d7097",
+      "groupType": "INPUT_NUMBER",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "",
+        "hasMinNumber": true,
+        "minNumber": 0,
+        "format": "CUSTOM",
+        "suffix": " RWF",
+        "decimalSeparator": ".",
+        "thousandsSeparator": ",",
+        "name": "rent_price_rwf"
+      }
+    },
+    {
+      "uuid": "12280e25-90c4-4110-b87c-faf272afa6c2",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "12280e25-90c4-4110-b87c-faf272afa6c2",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "3fd96bec-3d05-449f-a3f5-3acec81ba689",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "052c131f-23b4-48c5-aac8-42d24394fff5",
+                "title": "Is this your first time answering this survey?"
+              },
+              "comparison": "IS",
+              "value": "bd0b4ac1-ffe4-49f1-a21d-53edbd80550f"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "3735a32f-9c7c-4226-8149-943c8de7c20c",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "ca5d7f21-3ac4-4ca7-98c1-1e4420454f84"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "dbedf423-070c-4a10-94a4-fc41ee792829",
+      "type": "PAGE_BREAK",
+      "groupUuid": "dbedf423-070c-4a10-94a4-fc41ee792829",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_main_search_method",
+        "button": {
+          "label": "Next"
+        },
+        "index": 23,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "7db1ae25-8cc2-4500-8dec-a6b0f16212be",
+      "type": "HEADING_2",
+      "groupUuid": "7db1ae25-8cc2-4500-8dec-a6b0f16212be",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "Finding housing"
+      }
+    },
+    {
+      "uuid": "312af747-4de8-4154-a37c-74c6bc342d07",
+      "type": "TITLE",
+      "groupUuid": "312af747-4de8-4154-a37c-74c6bc342d07",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "What is the main way you found (or are finding) housing?"
+      }
+    },
+    {
+      "uuid": "9a789395-2cbe-4d33-b008-f12df6b5a97b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Recommendation from a friend",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "9b40b29d-7279-407a-9859-b55d477a5988",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "An agent",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "af150fcf-d7d1-46b1-8764-ffae326bce36",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Door-to-door enquiries",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "a3f181cb-34c6-446f-a496-c86966ebd1bc",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "WhatsApp or social media groups",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "c691f2c2-d177-4995-b283-d85e133f56ac",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "An online platform",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "87aa32d8-11e5-43a3-9f9f-2a588f9e9a7e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "University or senior students",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "1d163cd8-560e-46e0-8270-db4f499d867b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "78060740-c266-4ba8-bdd5-400e237aeb2f",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 6,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "main_search_method",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "b23c8c7f-ef64-4089-bbba-1a6ca0d020b7",
+      "type": "PAGE_BREAK",
+      "groupUuid": "b23c8c7f-ef64-4089-bbba-1a6ca0d020b7",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_search_difficulty",
+        "button": {
+          "label": "Next"
+        },
+        "index": 24,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "d476ea73-5416-4aed-98d8-83a56e828487",
+      "type": "TITLE",
+      "groupUuid": "d476ea73-5416-4aed-98d8-83a56e828487",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How hard was the search?"
+      }
+    },
+    {
+      "uuid": "f0c5ce35-bb27-4239-b108-2c81b4427a49",
+      "type": "LINEAR_SCALE",
+      "groupUuid": "f0c5ce35-bb27-4239-b108-2c81b4427a49",
+      "groupType": "LINEAR_SCALE",
+      "payload": {
+        "isRequired": true,
+        "start": 1,
+        "end": 5,
+        "step": 1,
+        "hasLeftLabel": true,
+        "leftLabel": "Very easy",
+        "hasRightLabel": true,
+        "rightLabel": "Very hard",
+        "name": "search_difficulty"
+      }
+    },
+    {
+      "uuid": "2e6caebc-920e-44b8-a182-31eebb4d740e",
+      "type": "PAGE_BREAK",
+      "groupUuid": "2e6caebc-920e-44b8-a182-31eebb4d740e",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_search_challenges",
+        "button": {
+          "label": "Next"
+        },
+        "index": 25,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "f51e9215-218d-45df-9cd1-312eed03a6e0",
+      "type": "TITLE",
+      "groupUuid": "f51e9215-218d-45df-9cd1-312eed03a6e0",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "What were the biggest challenges?"
+      }
+    },
+    {
+      "uuid": "f939ee6c-917d-4c0f-acb9-12ca4ad8f9c0",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Language",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "0bfc115f-b825-4f49-976d-bf4047388698",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Trust and scams",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "b5cd34b5-e625-4464-932c-b0f2b67125e5",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Unclear prices",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "746b2790-1e10-446c-93e2-9947e92d139c",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Few contacts in Kigali",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "049816a0-37a3-41fc-97cc-657cd00d8cc2",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Distance from campus",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "c8d75ba0-b4e3-439c-8fbc-44dd46895c9b",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Advance payment required",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "4f8bd914-f8c2-4cb3-b9d5-2c5d914cd7b3",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Contract terms",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "2c07883c-9e44-4dd2-8722-e100ae2418da",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 7,
+        "isFirst": false,
+        "isLast": false,
+        "text": "None",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "c21a90b0-3d2f-436d-8147-36759c0b7da3",
+      "type": "CHECKBOX",
+      "groupUuid": "965b2de1-215d-406e-9052-4da2b621b569",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 8,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "search_challenges",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "72ed3617-353a-4559-8235-9691a065d65f",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "72ed3617-353a-4559-8235-9691a065d65f",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "9c46a33b-39c0-4ee1-8903-57a5696ee29f",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "98dabd2b-9159-496e-ac90-5bc260a6f987",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "98dabd2b-9159-496e-ac90-5bc260a6f987",
+                "title": "Your nationality"
+              },
+              "comparison": "IS",
+              "value": "012e076f-940a-4a0e-8673-9b40ed41a071"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "0bc3786f-d209-4d99-95f1-1286a8167ae7",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "7b676c54-66ac-4df7-8f6f-aed41dc1d19e"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "4ef90089-a88d-4f29-a253-5451e26dcda2",
+      "type": "PAGE_BREAK",
+      "groupUuid": "4ef90089-a88d-4f29-a253-5451e26dcda2",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_secured_before_arrival",
+        "button": {
+          "label": "Next"
+        },
+        "index": 26,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "bb4cb4aa-349f-48db-b8b5-da7b7e5785b9",
+      "type": "TITLE",
+      "groupUuid": "bb4cb4aa-349f-48db-b8b5-da7b7e5785b9",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Did you secure housing before arriving in Rwanda?"
+      }
+    },
+    {
+      "uuid": "9410f497-c098-4ffc-a89a-fafb6acde15a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ec104006-d201-465c-b48f-dcbf24e4862e",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "secured_before_arrival"
+      }
+    },
+    {
+      "uuid": "ad3a75f7-3edb-4526-9252-b5d513da799c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ec104006-d201-465c-b48f-dcbf24e4862e",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No",
+        "name": "secured_before_arrival"
+      }
+    },
+    {
+      "uuid": "eecf885a-4c39-48db-a389-3abda3f3ad2d",
+      "type": "PAGE_BREAK",
+      "groupUuid": "eecf885a-4c39-48db-a389-3abda3f3ad2d",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_nationality_effect",
+        "button": {
+          "label": "Next"
+        },
+        "index": 27,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "0e7a1f1f-8d07-434f-9d50-84a291d1add5",
+      "type": "TITLE",
+      "groupUuid": "0e7a1f1f-8d07-434f-9d50-84a291d1add5",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Do you think your nationality affected the price you were quoted?"
+      }
+    },
+    {
+      "uuid": "241b3bb8-e08d-4f91-acda-6b7ae606360c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "7bfc0f31-4d0e-44e2-8e36-d384d8eff5b5",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "nationality_effect"
+      }
+    },
+    {
+      "uuid": "c22488b1-7a05-4c76-b563-500f20980833",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "7bfc0f31-4d0e-44e2-8e36-d384d8eff5b5",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "No",
+        "name": "nationality_effect"
+      }
+    },
+    {
+      "uuid": "398892da-5446-4727-8461-bc8b36a7828b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "7bfc0f31-4d0e-44e2-8e36-d384d8eff5b5",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Not sure",
+        "name": "nationality_effect"
+      }
+    },
+    {
+      "uuid": "7b676c54-66ac-4df7-8f6f-aed41dc1d19e",
+      "type": "PAGE_BREAK",
+      "groupUuid": "7b676c54-66ac-4df7-8f6f-aed41dc1d19e",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_top_location_factors",
+        "button": {
+          "label": "Next"
+        },
+        "index": 28,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "15dfa110-c7f1-4bfb-9fea-bc6a47e3f8f8",
+      "type": "HEADING_2",
+      "groupUuid": "15dfa110-c7f1-4bfb-9fea-bc6a47e3f8f8",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "Choosing where to live"
+      }
+    },
+    {
+      "uuid": "b4943202-6f27-4d06-af3e-a25b1dd007b8",
+      "type": "TITLE",
+      "groupUuid": "b4943202-6f27-4d06-af3e-a25b1dd007b8",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Which factors matter most when choosing where to live? (pick up to 3)"
+      }
+    },
+    {
+      "uuid": "b231c939-9f1d-4bac-8041-b7b66bf84b71",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Close to campus",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "edc544d4-a4d7-46e9-8837-7e28b83fd0db",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Basic amenities nearby",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "af91ea44-c409-4726-a768-975601a36327",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Good roads",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "38de9ad3-862e-4ae9-a543-dcc7d770bfa2",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Public transport",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "6474b8ed-9b67-4a8c-940e-08b697ae30e2",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Safety",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "c516bbdd-985d-4472-b6da-b166a20aba35",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Not in a valley or steep slope",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "11e5e387-4a72-4e3c-9878-b254d0dab702",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Utilities included",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "2e4a51b4-e6f3-4dab-a844-bf13f2a86c40",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 7,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Low price",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "4015a9ba-5373-4bc6-ae21-757622a81fc0",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 8,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Reliable internet",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "5ebf9000-e4e1-427f-a4eb-0b1426feb474",
+      "type": "CHECKBOX",
+      "groupUuid": "246225d7-c521-405e-9f78-3de7ab9a3e9c",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 9,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other students nearby",
+        "name": "top_location_factors",
+        "hasMaxChoices": true,
+        "maxChoices": 3
+      }
+    },
+    {
+      "uuid": "f081760f-445d-4f0c-bd14-cea40bcd1fa6",
+      "type": "PAGE_BREAK",
+      "groupUuid": "f081760f-445d-4f0c-bd14-cea40bcd1fa6",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_commute_frequency",
+        "button": {
+          "label": "Next"
+        },
+        "index": 29,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "c80180cb-0c9a-4832-aa0e-52377627807a",
+      "type": "TITLE",
+      "groupUuid": "c80180cb-0c9a-4832-aa0e-52377627807a",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How often do you commute between home and campus?"
+      }
+    },
+    {
+      "uuid": "a1c7fa68-5989-4935-a3e2-ca37ab0671f5",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "55f00cde-fa3b-4e5d-beb1-0bd1a5143e6e",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Daily",
+        "name": "commute_frequency"
+      }
+    },
+    {
+      "uuid": "3fc7cd8b-0ab0-4a9e-91d1-30eccfbcbdbb",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "55f00cde-fa3b-4e5d-beb1-0bd1a5143e6e",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "A few times a week",
+        "name": "commute_frequency"
+      }
+    },
+    {
+      "uuid": "a29d5034-9714-4237-8c25-5223068f1c7a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "55f00cde-fa3b-4e5d-beb1-0bd1a5143e6e",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Rarely",
+        "name": "commute_frequency"
+      }
+    },
+    {
+      "uuid": "7de2ea08-cef1-4a36-953f-6359f52ba14e",
+      "type": "PAGE_BREAK",
+      "groupUuid": "7de2ea08-cef1-4a36-953f-6359f52ba14e",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_commute_mode",
+        "button": {
+          "label": "Next"
+        },
+        "index": 30,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "0c02d04c-3650-407f-9ed2-d33880aee7d1",
+      "type": "TITLE",
+      "groupUuid": "0c02d04c-3650-407f-9ed2-d33880aee7d1",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How do you usually get to campus?"
+      }
+    },
+    {
+      "uuid": "19e0f4d9-ff87-430f-b035-7da23534e5a9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Walk",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "f46a109d-a82e-458b-9287-2a42cb7f84c5",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Moto taxi",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "d43b03cd-a439-43b5-bda0-179cd4334752",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Bus",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "f9012c20-0ea7-4a1f-bd36-8b6f8fcac99c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Car or taxi",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "1b694deb-1fa5-44cf-af4a-7aa7532b8efa",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "University shuttle",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "3a98696e-d155-4a3e-a06d-c7cd1034b39d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "b571fd86-ebba-47af-b679-8f1cf474e0ef",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "commute_mode",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "cf7093ba-87ea-4503-bebc-a777d219a560",
+      "type": "PAGE_BREAK",
+      "groupUuid": "cf7093ba-87ea-4503-bebc-a777d219a560",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_exercise_frequency",
+        "button": {
+          "label": "Next"
+        },
+        "index": 31,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "be049b7c-d20e-40e2-aff9-901f120ec775",
+      "type": "TITLE",
+      "groupUuid": "be049b7c-d20e-40e2-aff9-901f120ec775",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How often do you exercise?"
+      }
+    },
+    {
+      "uuid": "ef8fcd02-03be-4dc7-bd69-b9a593a0e17f",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ab39bf27-8515-4048-87d0-faa47da656c2",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Rarely",
+        "name": "exercise_frequency"
+      }
+    },
+    {
+      "uuid": "903e60a3-2add-4293-8151-cd0469517d1e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ab39bf27-8515-4048-87d0-faa47da656c2",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Sometimes",
+        "name": "exercise_frequency"
+      }
+    },
+    {
+      "uuid": "ed7821be-a450-4b46-b428-8ac640e6d502",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "ab39bf27-8515-4048-87d0-faa47da656c2",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Regularly",
+        "name": "exercise_frequency"
+      }
+    },
+    {
+      "uuid": "f7df85f7-75a4-4e58-bdf8-14ae3dca2b17",
+      "type": "PAGE_BREAK",
+      "groupUuid": "f7df85f7-75a4-4e58-bdf8-14ae3dca2b17",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_avoid_valleys",
+        "button": {
+          "label": "Next"
+        },
+        "index": 32,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "0143e59d-8f1c-40c2-bb51-d2ccaaeb12eb",
+      "type": "TITLE",
+      "groupUuid": "0143e59d-8f1c-40c2-bb51-d2ccaaeb12eb",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Do you avoid homes in valleys or on steep slopes?"
+      }
+    },
+    {
+      "uuid": "2c28545d-d15d-476e-a1c1-6fd5b7776112",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "bd41f344-6b0d-4295-9266-c3871ca6e23b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "avoid_valleys"
+      }
+    },
+    {
+      "uuid": "6e7d0da3-c8da-48b7-80be-fc2e6c4c6470",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "bd41f344-6b0d-4295-9266-c3871ca6e23b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "No",
+        "name": "avoid_valleys"
+      }
+    },
+    {
+      "uuid": "58bd214d-cc67-41c1-92dc-65424e011356",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "bd41f344-6b0d-4295-9266-c3871ca6e23b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No opinion",
+        "name": "avoid_valleys"
+      }
+    },
+    {
+      "uuid": "3eb7135f-0850-4c41-bf02-197ca2af53e5",
+      "type": "PAGE_BREAK",
+      "groupUuid": "3eb7135f-0850-4c41-bf02-197ca2af53e5",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_heard_via",
+        "button": {
+          "label": "Next"
+        },
+        "index": 33,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "d3f98848-95d2-4fe3-b494-c84d827f8cc1",
+      "type": "HEADING_2",
+      "groupUuid": "d3f98848-95d2-4fe3-b494-c84d827f8cc1",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "About this kind of survey"
+      }
+    },
+    {
+      "uuid": "da220f4f-88c5-4be4-86e6-c468c756d440",
+      "type": "TEXT",
+      "groupUuid": "da220f4f-88c5-4be4-86e6-c468c756d440",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "Last section: your answers here help us improve how we collect data in Kigali."
+      }
+    },
+    {
+      "uuid": "b0b3da6b-85d4-4c5c-b1d0-e37fa81ef465",
+      "type": "TITLE",
+      "groupUuid": "b0b3da6b-85d4-4c5c-b1d0-e37fa81ef465",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How did you hear about this survey?"
+      }
+    },
+    {
+      "uuid": "d44c1150-296d-429a-9dcf-53510600cff2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Someone asked me in person",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "fb810aa8-7367-4d26-840d-969d5d2b7460",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "WhatsApp",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "4f7f3f1b-c4d3-4cd8-bfe0-d682865d0ef0",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Email",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "cce119a4-d4ca-4f48-8648-ba194b6f9fca",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Social media",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "89eac3d8-82a9-4c0a-ab1b-817ca288ae0c",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "A classmate or friend",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "bb4fb033-7640-45b9-88aa-a4a83a3be3bf",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "aeb8b1fe-a71d-4f3e-a62d-f959b7a2889b",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "heard_via",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "d63c8d8a-610f-447f-9457-03733ad52bb9",
+      "type": "PAGE_BREAK",
+      "groupUuid": "d63c8d8a-610f-447f-9457-03733ad52bb9",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_motivators",
+        "button": {
+          "label": "Next"
+        },
+        "index": 34,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "e2fa5fc0-f917-4af9-a57b-56ecbecfb957",
+      "type": "TITLE",
+      "groupUuid": "e2fa5fc0-f917-4af9-a57b-56ecbecfb957",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "What made you take part?"
+      }
+    },
+    {
+      "uuid": "31fa9dae-3eaa-4d28-9850-43968bdb6496",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "I want the results",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "eaf6859d-a3ce-4239-8e0b-88ceef0dbfd7",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Someone asked me in person",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "9ab4a436-e7f6-45bb-9208-c4deefa99a06",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "It is short",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "fe2e4558-4354-4bcf-8f32-5ee4724139d7",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "I was affected by housing problems",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "e968976b-0a80-45b4-9d7f-0ad6f97dd5e2",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "I had free time now",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "14e5ad7e-e628-46b3-9eb5-f9957a4efdd1",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "A reward (airtime, snacks)",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "d735fd6e-1fd0-4472-97d7-d2426b71b984",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "The video",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "c195ee1e-d88c-4d02-8f6b-ade075572dde",
+      "type": "CHECKBOX",
+      "groupUuid": "03d9f4cf-5d94-4b99-9b59-6b9b26c076c5",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": true,
+        "index": 7,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "motivators",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "54b81f84-075f-4df3-8016-f71ef1bdf963",
+      "type": "PAGE_BREAK",
+      "groupUuid": "54b81f84-075f-4df3-8016-f71ef1bdf963",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_preferred_mode",
+        "button": {
+          "label": "Next"
+        },
+        "index": 35,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "7199c781-43e0-44de-8e60-2ea621b53c84",
+      "type": "TITLE",
+      "groupUuid": "7199c781-43e0-44de-8e60-2ea621b53c84",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Which do you prefer?"
+      }
+    },
+    {
+      "uuid": "001d88c3-41e3-440b-af4d-e66885c2d9bf",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "9218e1fe-0f87-434f-a429-8308e4f0c62d",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "In-person survey",
+        "name": "preferred_mode"
+      }
+    },
+    {
+      "uuid": "1e4fdabc-9e6d-4533-99f6-1c6ea63e7cd2",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "9218e1fe-0f87-434f-a429-8308e4f0c62d",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Online form",
+        "name": "preferred_mode"
+      }
+    },
+    {
+      "uuid": "9fdfa9ae-d5d2-4a16-af0f-696e044d29bc",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "9218e1fe-0f87-434f-a429-8308e4f0c62d",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No preference",
+        "name": "preferred_mode"
+      }
+    },
+    {
+      "uuid": "cfb56709-25cb-425b-9933-dcbe0cc20fcb",
+      "type": "PAGE_BREAK",
+      "groupUuid": "cfb56709-25cb-425b-9933-dcbe0cc20fcb",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_best_time",
+        "button": {
+          "label": "Next"
+        },
+        "index": 36,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "42051cf7-f802-47ac-8a1c-5e41f9d00d7d",
+      "type": "TITLE",
+      "groupUuid": "42051cf7-f802-47ac-8a1c-5e41f9d00d7d",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "When are you most available for surveys?"
+      }
+    },
+    {
+      "uuid": "e87aa415-4228-4d6e-ab40-e30ea12ab0e9",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0f1be05d-dd50-4db2-9ba3-cbf5689069b4",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Orientation weeks",
+        "name": "best_time"
+      }
+    },
+    {
+      "uuid": "4816e3c7-c51d-4384-b3b5-b13726851203",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0f1be05d-dd50-4db2-9ba3-cbf5689069b4",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Early semester",
+        "name": "best_time"
+      }
+    },
+    {
+      "uuid": "a20aeb09-b336-466e-b4e3-b17e8d0bd27d",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0f1be05d-dd50-4db2-9ba3-cbf5689069b4",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Mid-semester",
+        "name": "best_time"
+      }
+    },
+    {
+      "uuid": "f0691d7f-e7c3-45ad-badb-1345e1b4d906",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0f1be05d-dd50-4db2-9ba3-cbf5689069b4",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Exam period",
+        "name": "best_time"
+      }
+    },
+    {
+      "uuid": "41cb5a79-d15a-4f85-ac1a-fa23f6e4d82a",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0f1be05d-dd50-4db2-9ba3-cbf5689069b4",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 4,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Semester break",
+        "name": "best_time"
+      }
+    },
+    {
+      "uuid": "57de66b8-92d9-4f10-90e0-6e861c487da6",
+      "type": "PAGE_BREAK",
+      "groupUuid": "57de66b8-92d9-4f10-90e0-6e861c487da6",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_affected_by_problem",
+        "button": {
+          "label": "Next"
+        },
+        "index": 37,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "f5a97545-c918-4f1b-ab22-f7c99a04b562",
+      "type": "TITLE",
+      "groupUuid": "f5a97545-c918-4f1b-ab22-f7c99a04b562",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How much did housing problems affect your studies or daily life?"
+      }
+    },
+    {
+      "uuid": "2adfab92-bdfb-41d8-98b5-dbdb0f4b9b8f",
+      "type": "LINEAR_SCALE",
+      "groupUuid": "2adfab92-bdfb-41d8-98b5-dbdb0f4b9b8f",
+      "groupType": "LINEAR_SCALE",
+      "payload": {
+        "isRequired": true,
+        "start": 1,
+        "end": 5,
+        "step": 1,
+        "hasLeftLabel": true,
+        "leftLabel": "Not at all",
+        "hasRightLabel": true,
+        "rightLabel": "A great deal",
+        "name": "affected_by_problem"
+      }
+    },
+    {
+      "uuid": "7b02d2cc-495c-4a6f-939e-2bd08042fe48",
+      "type": "PAGE_BREAK",
+      "groupUuid": "7b02d2cc-495c-4a6f-939e-2bd08042fe48",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_data_concerns",
+        "button": {
+          "label": "Next"
+        },
+        "index": 38,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "7bf570c5-37c4-4e63-8cf3-dbba2c54155f",
+      "type": "TITLE",
+      "groupUuid": "7bf570c5-37c4-4e63-8cf3-dbba2c54155f",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Any concerns about sharing housing information?"
+      }
+    },
+    {
+      "uuid": "50c6963d-c80c-4d7e-b578-c61505286fe7",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Might affect my relationship with the landlord or agent",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "1d542773-c208-4540-8b70-bbfc7201d8c5",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 1,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Lease may be confidential",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "98520448-401a-4784-b787-f5fb227ed025",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 2,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Unsure how the data is used",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "7ffbdbed-2321-4199-a3b8-738d810544c3",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 3,
+        "isFirst": false,
+        "isLast": false,
+        "text": "Privacy",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "211faa97-4a4c-41ba-84fb-a9267beddf61",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 4,
+        "isFirst": false,
+        "isLast": false,
+        "text": "It takes too long",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "3a89fa91-908a-490a-98a3-d684c0f093f1",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 5,
+        "isFirst": false,
+        "isLast": false,
+        "text": "I distrust surveys",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "2b3b5ebe-9798-4962-9034-73872c986900",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 6,
+        "isFirst": false,
+        "isLast": false,
+        "text": "None",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": false
+      }
+    },
+    {
+      "uuid": "7d5029f6-e43f-4b17-966d-558ea8b857f4",
+      "type": "CHECKBOX",
+      "groupUuid": "b436342e-c40c-40ce-9895-93f3af062a4e",
+      "groupType": "CHECKBOXES",
+      "payload": {
+        "isRequired": false,
+        "index": 7,
+        "isFirst": false,
+        "isLast": true,
+        "text": "Other",
+        "name": "data_concerns",
+        "hasOtherOption": true,
+        "isOtherOption": true
+      }
+    },
+    {
+      "uuid": "78d27de3-dfb3-46cd-843e-3e8b7054d033",
+      "type": "PAGE_BREAK",
+      "groupUuid": "78d27de3-dfb3-46cd-843e-3e8b7054d033",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_rent_talk_comfort",
+        "button": {
+          "label": "Next"
+        },
+        "index": 39,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "f639a25b-1856-43da-99e4-1157b855ae51",
+      "type": "TITLE",
+      "groupUuid": "f639a25b-1856-43da-99e4-1157b855ae51",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "How comfortable is it to talk openly about rent in your circle?"
+      }
+    },
+    {
+      "uuid": "f238f224-18c5-480e-8521-f21368eee6d7",
+      "type": "LINEAR_SCALE",
+      "groupUuid": "f238f224-18c5-480e-8521-f21368eee6d7",
+      "groupType": "LINEAR_SCALE",
+      "payload": {
+        "isRequired": true,
+        "start": 1,
+        "end": 5,
+        "step": 1,
+        "hasLeftLabel": true,
+        "leftLabel": "Very uncomfortable",
+        "hasRightLabel": true,
+        "rightLabel": "Very comfortable",
+        "name": "rent_talk_comfort"
+      }
+    },
+    {
+      "uuid": "673fdea4-f09e-46b7-b65f-42b91d75f4cb",
+      "type": "PAGE_BREAK",
+      "groupUuid": "673fdea4-f09e-46b7-b65f-42b91d75f4cb",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_want_results",
+        "button": {
+          "label": "Next"
+        },
+        "index": 40,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "e235a783-2215-4eb6-a01d-7598e7377dd4",
+      "type": "TITLE",
+      "groupUuid": "e235a783-2215-4eb6-a01d-7598e7377dd4",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Would you like us to send you the results?"
+      }
+    },
+    {
+      "uuid": "c185acf7-0183-4038-884b-19a6729d307e",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "431631d7-fa28-44bd-8e1d-519dae337938",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "want_results"
+      }
+    },
+    {
+      "uuid": "7a368a1b-c930-4ab0-82db-0d948b43ebef",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "431631d7-fa28-44bd-8e1d-519dae337938",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No",
+        "name": "want_results"
+      }
+    },
+    {
+      "uuid": "7d9fafbb-b681-4e13-b242-9c4f887620df",
+      "type": "PAGE_BREAK",
+      "groupUuid": "7d9fafbb-b681-4e13-b242-9c4f887620df",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_open_to_interview",
+        "button": {
+          "label": "Next"
+        },
+        "index": 41,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "c2cf338b-56ec-47fb-bce1-9080347acb60",
+      "type": "TITLE",
+      "groupUuid": "c2cf338b-56ec-47fb-bce1-9080347acb60",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Are you open to a short follow-up interview?"
+      }
+    },
+    {
+      "uuid": "c0d4db96-485c-4c75-8932-e024f78c8e9b",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0fb28f0f-9058-4452-bf59-8ad6216ba382",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 0,
+        "isFirst": true,
+        "isLast": false,
+        "text": "Yes",
+        "name": "open_to_interview"
+      }
+    },
+    {
+      "uuid": "4f3974e4-a8f0-4433-abd4-351bdd2191b1",
+      "type": "MULTIPLE_CHOICE_OPTION",
+      "groupUuid": "0fb28f0f-9058-4452-bf59-8ad6216ba382",
+      "groupType": "MULTIPLE_CHOICE",
+      "payload": {
+        "isRequired": true,
+        "index": 1,
+        "isFirst": false,
+        "isLast": true,
+        "text": "No",
+        "name": "open_to_interview"
+      }
+    },
+    {
+      "uuid": "368df153-555e-4d0e-a5a0-aa962057f88c",
+      "type": "CONDITIONAL_LOGIC",
+      "groupUuid": "368df153-555e-4d0e-a5a0-aa962057f88c",
+      "groupType": "CONDITIONAL_LOGIC",
+      "payload": {
+        "conditionals": [
+          {
+            "uuid": "05a71f7f-b175-4faf-9313-926274a83ed0",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "431631d7-fa28-44bd-8e1d-519dae337938",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "431631d7-fa28-44bd-8e1d-519dae337938",
+                "title": "Would you like us to send you the results?"
+              },
+              "comparison": "IS",
+              "value": "7a368a1b-c930-4ab0-82db-0d948b43ebef"
+            }
+          },
+          {
+            "uuid": "14107212-e89c-4b23-9c4f-86b61defbb28",
+            "type": "SINGLE",
+            "payload": {
+              "field": {
+                "uuid": "0fb28f0f-9058-4452-bf59-8ad6216ba382",
+                "type": "INPUT_FIELD",
+                "questionType": "MULTIPLE_CHOICE_OPTION",
+                "blockGroupUuid": "0fb28f0f-9058-4452-bf59-8ad6216ba382",
+                "title": "Are you open to a short follow-up interview?"
+              },
+              "comparison": "IS",
+              "value": "4f3974e4-a8f0-4433-abd4-351bdd2191b1"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "uuid": "b4b00a49-2c10-4b96-ba5c-f115cfae6b2a",
+            "type": "JUMP_TO_PAGE",
+            "payload": {
+              "jumpToPage": "803f35c0-80d2-48ed-b585-4ce499ec6f79"
+            }
+          }
+        ],
+        "logicalOperator": "AND",
+        "updateUuid": null
+      }
+    },
+    {
+      "uuid": "af1e9827-1f2f-4a92-8bee-becccbb16051",
+      "type": "PAGE_BREAK",
+      "groupUuid": "af1e9827-1f2f-4a92-8bee-becccbb16051",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_contact_email",
+        "button": {
+          "label": "Next"
+        },
+        "index": 42,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "5769e506-da1b-4aab-b58d-d6488592924f",
+      "type": "TITLE",
+      "groupUuid": "5769e506-da1b-4aab-b58d-d6488592924f",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Your email"
+      }
+    },
+    {
+      "uuid": "cc4cb923-fcff-4511-ac71-d7b415b0c81f",
+      "type": "INPUT_EMAIL",
+      "groupUuid": "cc4cb923-fcff-4511-ac71-d7b415b0c81f",
+      "groupType": "INPUT_EMAIL",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "name@example.com",
+        "name": "contact_email"
+      }
+    },
+    {
+      "uuid": "803f35c0-80d2-48ed-b585-4ce499ec6f79",
+      "type": "PAGE_BREAK",
+      "groupUuid": "803f35c0-80d2-48ed-b585-4ce499ec6f79",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_comments",
+        "button": {
+          "label": "Next"
+        },
+        "index": 43,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "5c2f4055-bdbf-4877-82c2-3741389c1c7b",
+      "type": "TITLE",
+      "groupUuid": "5c2f4055-bdbf-4877-82c2-3741389c1c7b",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Anything else you would like to tell us? (optional)"
+      }
+    },
+    {
+      "uuid": "80a647fb-b185-4e49-9c9d-bfc43c16abfd",
+      "type": "TEXTAREA",
+      "groupUuid": "80a647fb-b185-4e49-9c9d-bfc43c16abfd",
+      "groupType": "TEXTAREA",
+      "payload": {
+        "isRequired": false,
+        "placeholder": "",
+        "name": "comments"
+      }
+    },
+    {
+      "uuid": "9e665464-e15c-42da-bbbf-841cf38f5354",
+      "type": "PAGE_BREAK",
+      "groupUuid": "9e665464-e15c-42da-bbbf-841cf38f5354",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "pg_my_code",
+        "button": {
+          "label": "Next"
+        },
+        "index": 44,
+        "isFirst": false,
+        "isLast": false
+      }
+    },
+    {
+      "uuid": "9f3741fe-7599-4de5-9760-9b144064d4f6",
+      "type": "HEADING_2",
+      "groupUuid": "9f3741fe-7599-4de5-9760-9b144064d4f6",
+      "groupType": "HEADING_2",
+      "payload": {
+        "html": "Your referral code"
+      }
+    },
+    {
+      "uuid": "c18d1b1b-6c6e-4a4f-851e-5330147a7c0c",
+      "type": "TITLE",
+      "groupUuid": "c18d1b1b-6c6e-4a4f-851e-5330147a7c0c",
+      "groupType": "QUESTION",
+      "payload": {
+        "html": "Create your own referral code"
+      }
+    },
+    {
+      "uuid": "c17c44f7-3d4f-4dc0-b732-19e3d9552d0d",
+      "type": "TEXT",
+      "groupUuid": "c17c44f7-3d4f-4dc0-b732-19e3d9552d0d",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "<i>Choose 4 to 8 letters or digits, for example your initials and a number (AAI07). You will share it with friends so we can see how far the survey spreads.</i>"
+      }
+    },
+    {
+      "uuid": "357d9fe3-518f-43f1-98d6-62470f2da60f",
+      "type": "INPUT_TEXT",
+      "groupUuid": "357d9fe3-518f-43f1-98d6-62470f2da60f",
+      "groupType": "INPUT_TEXT",
+      "payload": {
+        "isRequired": true,
+        "placeholder": "e.g. AAI07",
+        "hasMinCharacters": true,
+        "minCharacters": 4,
+        "hasMaxCharacters": true,
+        "maxCharacters": 8,
+        "name": "my_code"
+      }
+    },
+    {
+      "uuid": "ca5d7f21-3ac4-4ca7-98c1-1e4420454f84",
+      "type": "PAGE_BREAK",
+      "groupUuid": "ca5d7f21-3ac4-4ca7-98c1-1e4420454f84",
+      "groupType": "PAGE_BREAK",
+      "payload": {
+        "name": "end",
+        "isThankYouPage": true,
+        "isQualifiedForThankYouPage": true,
+        "index": 45,
+        "isFirst": false,
+        "isLast": true
+      }
+    },
+    {
+      "uuid": "4e7563c5-63f4-44f3-b7dc-8271fcb5072f",
+      "type": "HEADING_1",
+      "groupUuid": "4e7563c5-63f4-44f3-b7dc-8271fcb5072f",
+      "groupType": "HEADING_1",
+      "payload": {
+        "html": "Thank you! 🎉"
+      }
+    },
+    {
+      "uuid": "eccd2ac4-5c92-4803-824c-795685547a4f",
+      "type": "TEXT",
+      "groupUuid": "eccd2ac4-5c92-4803-824c-795685547a4f",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "Your referral code is the one you just created. Share this link with friends and replace <b>YOURCODE</b> with your code: <b>https://tally.so/r/zEXyDZ?ref=YOURCODE</b>"
+      }
+    },
+    {
+      "uuid": "6b6ad5cc-01df-4361-bf19-77d981befce9",
+      "type": "TEXT",
+      "groupUuid": "6b6ad5cc-01df-4361-bf19-77d981befce9",
+      "groupType": "TEXT",
+      "payload": {
+        "html": "Your answers will help CMU students find fair housing in Kigali. <b>Rented more than one place?</b> Reopen the form and choose “No, I am adding another place”."
+      }
+    }
+  ],
+  "settings": {
+    "language": "en",
+    "hasProgressBar": true,
+    "hasPartialSubmissions": true,
+    "saveForLater": true,
+    "pageAutoJump": true,
+    "styles": {
+      "theme": "CUSTOM",
+      "color": {
+        "background": "#ffffff",
+        "text": "#1f2937",
+        "accent": "#C41230",
+        "buttonBackground": "#C41230",
+        "buttonText": "#ffffff"
+      },
+      "direction": "ltr"
+    }
+  }
+}

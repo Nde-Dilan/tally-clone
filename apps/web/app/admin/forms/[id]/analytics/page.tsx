@@ -176,10 +176,14 @@ async function AnalyticsData({
       value: a.completionRate == null ? '' : `${a.completionRate}%`,
     },
     {
-      label: m.metricTimeToComplete,
+      label: 'Median time to complete',
       // null = no completed session in range had a derivable open time. Showing
       // "0s" there would state a duration nobody measured.
-      value: a.timeToComplete == null ? '' : formatDuration(a.timeToComplete, m.seconds),
+      value: (a.medianTimeToComplete ?? a.timeToComplete) == null ? '—' : formatDuration((a.medianTimeToComplete ?? a.timeToComplete)!, m.seconds),
+    },
+    {
+      label: 'Average time to complete',
+      value: a.avgTimeToComplete == null ? '—' : formatDuration(a.avgTimeToComplete, m.seconds),
     },
     { label: m.metricPartials, value: String(a.partialSubmits) },
     // Only when the form actually converts through a meeting: an eternal "0"
@@ -198,16 +202,11 @@ async function AnalyticsData({
       <div className="overflow-hidden rounded-2xl border border-border bg-card">
         <dl
           className={`-mb-px -mr-px grid grid-cols-2 sm:grid-cols-3 ${
-            cards.length === 7 ? 'xl:grid-cols-7' : 'xl:grid-cols-6'
+            cards.length >= 7 ? 'xl:grid-cols-7' : 'xl:grid-cols-6'
           }`}
         >
           {cards.map((c) => (
             <div key={c.label} className="flex flex-col justify-between gap-2 border-b border-r border-border p-5">
-              {/* Both halves in the sans, matching the dashboard's stat cards: the
-                  two surfaces show the same kind of figure and must not disagree
-                  about what a number looks like. `tabular-nums` is what the value
-                  actually needed, and the label earns its separation from size,
-                  case and `text-faint` instead of from a second typeface. */}
               <dt className="text-2xs font-medium uppercase tracking-wider text-faint">{c.label}</dt>
               <dd className="text-2xl font-bold tabular-nums tracking-tight">{c.value}</dd>
             </div>
@@ -255,13 +254,13 @@ async function AnalyticsData({
                 <li key={row.stepIndex} className="border-t border-border py-3 first:border-t-0 last:pb-0">
                   <div className="flex items-baseline justify-between gap-3 text-sm">
                     <span className="min-w-0 truncate font-medium" title={label}>
-                      {/* The step number is the row's address, not its content: the
-                          quietest tier, so the question text beside it stays the
-                          thing you read. */}
                       {!row.isCover ? (
                         <span className="mr-1.5 tabular-nums text-faint">{row.stepIndex + 1}</span>
                       ) : null}
                       {label}
+                      {row.key && (
+                        <span className="ml-2 font-mono text-xs text-muted-foreground">({row.key})</span>
+                      )}
                     </span>
                     <span className="flex shrink-0 items-baseline gap-3 tabular-nums">
                       <span title={m.colDropoff} className="text-xs">
@@ -289,6 +288,56 @@ async function AnalyticsData({
               );
             })}
           </ol>
+        </section>
+
+        {/* First-Party Traffic Attribution */}
+        <section
+          className="min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6"
+          data-testid="analytics-traffic"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold">Traffic Attribution</h2>
+              <p className="text-sm text-muted-foreground">
+                First-party conversion tracking by UTM source, medium, campaign, and referrers.
+              </p>
+            </div>
+          </div>
+
+          {a.trafficSources && a.trafficSources.length > 0 ? (
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-border text-xs uppercase tracking-wider text-faint">
+                    <th className="pb-3 font-medium">Source</th>
+                    <th className="pb-3 font-medium">Medium</th>
+                    <th className="pb-3 font-medium">Campaign</th>
+                    <th className="pb-3 font-medium text-right">Starts</th>
+                    <th className="pb-3 font-medium text-right">Completed</th>
+                    <th className="pb-3 font-medium text-right">Conversion Rate</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {a.trafficSources.map((s, idx) => (
+                    <tr key={`${s.source}-${s.medium}-${s.campaign}-${idx}`} className="hover:bg-muted/30">
+                      <td className="py-3 font-medium text-foreground">{s.source}</td>
+                      <td className="py-3 text-muted-foreground">{s.medium || '—'}</td>
+                      <td className="py-3 text-muted-foreground">{s.campaign || '—'}</td>
+                      <td className="py-3 text-right tabular-nums">{s.total}</td>
+                      <td className="py-3 text-right tabular-nums font-semibold">{s.completed}</td>
+                      <td className="py-3 text-right tabular-nums">
+                        {s.conversionRate != null ? `${s.conversionRate}%` : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="mt-4 text-sm text-muted-foreground">
+              No attributed visits recorded yet. Tag your form links with UTM parameters (e.g. <code className="text-xs">?utm_source=twitter&utm_medium=social</code>) to track traffic sources.
+            </p>
+          )}
         </section>
       </div>
     </div>

@@ -7,8 +7,6 @@ import { greetingName } from '@/lib/person';
 import { publishedWorkspacePagePath } from '@/lib/public-page';
 import { CopyLink } from '@/components/copy-link';
 import { CreateForm } from './forms/create-form';
-import { AgentBanner } from './_components/agent-banner';
-import { AgentCard } from './_components/agent-card';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,29 +21,16 @@ export default async function AdminHome() {
     adminApi.linkPage().catch(() => null),
   ]);
 
-  // Aggregate submissions + completion across every form (reuse per-form
-  // analytics — no new endpoint). Weighted completion = Σsubmissions / Σstarts.
+  // Aggregate submissions + completion across every form
   const analytics = await Promise.all(
     forms.map((f) => adminApi.getAnalytics(f.id).catch(() => null)),
   );
   const totalSubmissions = analytics.reduce((n, a) => n + (a?.submissions ?? 0), 0);
   const totalStarts = analytics.reduce((n, a) => n + (a?.starts ?? 0), 0);
-  // Clamped for the same reason the per-form rate is (analytics.service.ts):
-  // submissions and starts are windowed by different timestamps, so a session
-  // that starts before a window and completes inside it can push the raw ratio
-  // past 1. This surface computes its own rate, so it needs its own cap.
   const completionRate =
     totalStarts > 0 ? Math.min(100, Math.round((totalSubmissions / totalStarts) * 1000) / 10) : 0;
 
-  // The dashboard's shareable link is the WORKSPACE PAGE (/{accountCode}: the
-  // workspace's chosen forms and links), and only while it is published in
-  // Account settings, Public page. Off: the box hides rather than pointing at
-  // a 404.
   const publicUrl = publishedWorkspacePagePath(me.accountCode, linkPage?.page);
-
-  // Null when `displayName` is really the address — the full one for local signup,
-  // the local part for an invite. The email has to be passed to catch the second
-  // case (see `person.ts`). The un-named greeting is the correct fallback.
   const firstName = greetingName(me.displayName, me.email);
   const createLabels = {
     create: messages.forms.create,
@@ -61,22 +46,15 @@ export default async function AdminHome() {
     layoutVerticalDesc: messages.forms.layoutVerticalDesc,
   };
 
-  // The list beside the figures: the forms worked on most recently, each with
-  // the two numbers the stat row totals. Same per-form analytics, no new call.
-  const recent = forms
+  const formRows = forms
     .map((f, i) => ({ form: f, analytics: analytics[i] ?? null }))
-    .sort((a, b) => b.form.updatedAt - a.form.updatedAt)
-    .slice(0, RECENT_LIMIT);
+    .sort((a, b) => b.form.updatedAt - a.form.updatedAt);
   const picker = messages.picker;
   const zone = me.timezone ?? 'UTC';
 
   return (
     <div className="mx-auto max-w-[1520px] px-4 py-8 sm:px-8 sm:py-10">
-      <AgentBanner m={h.agentBanner} />
       <div className="mb-8 flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-        {/* Two lines at ONE size: the greeting in ink, what the page is in grey.
-            The grey line is the subtitle, promoted, so the page opens with a
-            statement instead of a title and a caption. */}
         <div className="min-w-0">
           <h1 className="text-3xl font-bold tracking-tight">
             {firstName ? t(h.welcomeNamed, { name: firstName }) : h.welcome}
@@ -97,11 +75,11 @@ export default async function AdminHome() {
         </div>
       </div>
 
-      {/* One bordered band, three cells: the figures read as a row of one object
-          rather than three separate cards competing for the eye. */}
-      <div className="mb-10 grid grid-cols-1 divide-y divide-border overflow-hidden rounded-2xl border border-border sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      {/* Overview Stats Row */}
+      <div className="mb-10 grid grid-cols-1 divide-y divide-border overflow-hidden rounded-2xl border border-border sm:grid-cols-4 sm:divide-x sm:divide-y-0">
         <Stat label={h.statForms} value={String(forms.length)} href="/admin/forms" />
         <Stat label={h.statSubmissions} value={String(totalSubmissions)} href="/admin/submissions" />
+        <Stat label="Total Starts" value={String(totalStarts)} href="/admin/analytics" />
         <Stat
           label={h.statCompletion}
           value={`${completionRate}%`}
@@ -110,73 +88,133 @@ export default async function AdminHome() {
         />
       </div>
 
-      <AgentCard m={h.agentCard} />
-
-      <section aria-labelledby="home-recent" className="min-w-0">
-        <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
-          <h2 id="home-recent" className={EYEBROW}>
-            {h.recent}
-          </h2>
+      {/* Current Forms Section */}
+      <section aria-labelledby="home-forms-heading" className="min-w-0">
+        <div className="mb-4 flex items-center justify-between gap-3 border-b border-border pb-3">
+          <div>
+            <h2 id="home-forms-heading" className="text-lg font-semibold tracking-tight text-foreground">
+              Current Forms
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              Active questionnaires with direct links, responses, and real-time conversion metrics.
+            </p>
+          </div>
           <Link href="/admin/forms" className="text-sm font-medium text-foreground hover:underline">
             {h.viewAll}
           </Link>
         </div>
-        {recent.length === 0 ? (
-          <p className="py-10 text-sm text-muted-foreground">{messages.forms.emptyBody}</p>
+
+        {formRows.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border p-12 text-center">
+            <i className="pi pi-file-edit mb-3 text-3xl text-faint" />
+            <p className="text-sm font-medium text-foreground">{messages.forms.emptyBody}</p>
+            <div className="mt-4 flex justify-center">
+              <CreateForm labels={createLabels} />
+            </div>
+          </div>
         ) : (
-          <ul>
-            {recent.map(({ form, analytics: a }) => {
+          <div className="flex flex-col gap-3">
+            {formRows.map(({ form, analytics: a }) => {
               const submissions = a?.submissions ?? 0;
-              const rate = a?.completionRate ?? null;
+              const starts = a?.starts ?? 0;
+              const rate = a?.completionRate ?? (starts > 0 ? (submissions / starts) * 100 : 0);
+              const publicPath = `/${me.accountCode}/f/${form.slug}`;
+
               return (
-                <li key={form.id} data-testid="home-recent-row">
-                  <Link
-                    href={`/admin/forms/${form.id}/edit`}
-                    className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 gap-y-1 border-b border-border py-4 transition-colors hover:bg-sidebar sm:grid-cols-[minmax(0,1fr)_11rem_10rem_8rem] sm:px-2"
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate font-medium text-foreground">{form.name}</span>
-                      <span className="block truncate text-xs text-faint">/{form.slug}</span>
-                    </span>
-                    <span
-                      className={
-                        submissions > 0
-                          ? 'text-sm tabular-nums text-foreground'
-                          : 'text-sm text-faint'
-                      }
+                <div
+                  key={form.id}
+                  data-testid="home-form-card"
+                  className="group flex flex-col justify-between gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-foreground/30 hover:shadow-sm sm:flex-row sm:items-center"
+                >
+                  {/* Form Info */}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" title="Published" />
+                      <Link
+                        href={`/admin/forms/${form.id}/edit`}
+                        className="truncate text-base font-semibold text-foreground hover:underline"
+                      >
+                        {form.name}
+                      </Link>
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                      <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-foreground">
+                        {publicPath}
+                      </code>
+                      <span>•</span>
+                      <span>Updated {formatDate(form.updatedAt, { locale, timeZone: zone })}</span>
+                    </div>
+                  </div>
+
+                  {/* Metrics */}
+                  <div className="flex items-center gap-6 sm:px-4">
+                    <div className="flex flex-col text-left sm:text-right">
+                      <span className="text-sm font-semibold text-foreground tabular-nums">
+                        {t(picker.submissionsCount, { n: submissions })}
+                      </span>
+                      <span className="text-xs text-muted-foreground tabular-nums">
+                        {starts} starts
+                      </span>
+                    </div>
+                    <div className="hidden w-28 sm:block">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">Rate</span>
+                        <span className="font-medium tabular-nums text-foreground">{Math.round(rate)}%</span>
+                      </div>
+                      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                        <div
+                          className="h-full rounded-full bg-emerald-500 transition-all"
+                          style={{ width: `${Math.min(100, Math.max(0, rate))}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 border-t border-border pt-3 sm:border-t-0 sm:pt-0">
+                    <a
+                      href={publicPath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                      title="Open public form in a new tab"
                     >
-                      {submissions > 0 ? t(picker.submissionsCount, { n: submissions }) : h.noSubmissions}
-                    </span>
-                    <span className="hidden items-center gap-2 sm:flex">
-                      {rate == null ? null : (
-                        <>
-                          <span className="w-10 text-sm tabular-nums text-foreground">
-                            {t(picker.completionValue, { n: Math.round(rate) })}
-                          </span>
-                          {/* The one saturated mark on the row: progress, in the
-                              signal. A track under it so 0% still reads as a bar. */}
-                          <span aria-hidden className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
-                            <span className="block h-full rounded-full bg-signal-edge" style={{ width: `${rate}%` }} />
-                          </span>
-                        </>
-                      )}
-                    </span>
-                    <span className="hidden text-right text-xs text-faint sm:block">
-                      {formatDate(form.updatedAt, { locale, timeZone: zone })}
-                    </span>
-                  </Link>
-                </li>
+                      <i className="pi pi-external-link text-[11px]" />
+                      <span>Open Form</span>
+                    </a>
+                    <Link
+                      href={`/admin/forms/${form.id}/edit`}
+                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                      title="Edit form layout and questions"
+                    >
+                      <i className="pi pi-file-edit text-[11px]" />
+                      <span>Edit</span>
+                    </Link>
+                    <Link
+                      href={`/admin/forms/${form.id}/analytics`}
+                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                      title="View completion time and drop-off analytics"
+                    >
+                      <i className="pi pi-chart-bar text-[11px]" />
+                      <span>Analytics</span>
+                    </Link>
+                    <Link
+                      href={`/admin/forms/${form.id}/submissions`}
+                      className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                      title="Inspect form responses"
+                    >
+                      <i className="pi pi-inbox text-[11px]" />
+                      <span>Submissions</span>
+                    </Link>
+                  </div>
+                </div>
               );
             })}
-          </ul>
+          </div>
         )}
       </section>
 
-      {/* Two links to places the rail does not go (the brand kit and the public
-          page live under Account settings), set as one band the width of the
-          figures above so they close the page the way the figures open it.
-          They used to float in a column of four beside the list, and two of the
-          four repeated the rail's own entries (Integrations, Analytics). */}
+      {/* Useful Shortcuts */}
       <section aria-labelledby="home-shortcuts" className="mt-10">
         <h2 id="home-shortcuts" className="sr-only">
           {h.shortcuts}

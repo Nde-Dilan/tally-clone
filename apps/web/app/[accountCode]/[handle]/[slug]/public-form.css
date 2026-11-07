@@ -1792,6 +1792,31 @@
   line-height: 1.5;
   text-wrap: balance;
 }
+.pf-done__referral {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1.5px dashed var(--pf-primary);
+  border-radius: 12px;
+  padding: 16px 28px;
+  margin-bottom: 24px;
+}
+.pf-done__referral-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pf-primary);
+}
+.pf-done__referral-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--foreground);
+}
 .pf-done__cta {
   display: inline-flex;
   align-items: center;
@@ -2393,32 +2418,53 @@
 
 .pf-v__page {
   width: 100%;
-  max-width: 640px;
+  max-width: 700px;
   margin: 0 auto;
-  padding: 0 20px calc(56px + env(safe-area-inset-bottom));
+  padding: 40px 24px calc(64px + env(safe-area-inset-bottom));
   box-sizing: border-box;
 }
 .pf-v__header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 22px 0 2px;
 }
 
-/* Cover-as-hero: same badge/title/subheadline/trust classes as the cover
-   screen, centered, with the logos marquee — but no Start gate. */
+/* Cover-as-hero: left-aligned, spacious document header with no divider line. */
 .pf-v__hero {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: 22px 0 26px;
-  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+  text-align: left;
+  padding: 24px 0 28px;
+  border-bottom: none;
+}
+.pf-v__hero .pf__title {
+  font-size: clamp(30px, 4.5vw, 40px);
+  font-weight: 800;
+  color: var(--foreground);
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  text-align: left;
+  letter-spacing: -0.02em;
+}
+.pf-v__hero .pf__subheadline {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  text-align: left;
+  margin: 0;
+}
+.pf-v__hero .pf__subheadline b,
+.pf-v__hero .pf__subheadline strong {
+  color: var(--foreground);
+  font-weight: 600;
 }
 
-/* Question blocks: a quiet stacked list separated by hairlines. */
+/* Question blocks: natural vertical document spacing without borders. */
 .pf-v__question {
-  padding: 26px 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0;
+  margin-bottom: 28px;
+  border-bottom: none;
 }
 .pf-v__question:last-of-type {
   border-bottom: none;
@@ -2429,26 +2475,65 @@
 }
 .pf-v__question .pf__question {
   text-align: left;
-  font-size: clamp(17px, 3vw, 21px);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px 0;
 }
 .pf-v__question .pf__helper {
   text-align: left;
-  margin-top: 6px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+  margin-bottom: 8px;
 }
 .pf-v__question .pf__fields {
-  margin-top: 16px;
+  margin-top: 8px;
 }
 .pf-v__question .pf__error {
   text-align: left;
-  margin-top: 10px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.pf-v__section-header {
+  margin-top: 36px;
+  margin-bottom: 16px;
+  padding: 0;
+  border: none;
+}
+.pf-v__section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.pf-v__section-desc {
+  font-size: 15px;
+  color: var(--muted-foreground);
+  margin-top: 4px;
 }
 .pf-v__required {
-  /* NOT the accent (see the note under `.pf__logo--fallback`): this asterisk is the only thing
-     telling a respondent a field is mandatory, and a pale brand colour would
-     erase it. It reads as emphasis through weight and the error colour it
-     shares with the message it predicts. */
-  color: var(--destructive);
-  margin-left: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+  line-height: 1;
 }
 .pf-v__question--error .pf-input {
   border-color: var(--destructive);
@@ -2462,15 +2547,209 @@
   background: var(--muted);
 }
 
-/* Footer: the single Submit for the whole page. */
+/* Footer: clean left-aligned submit button. */
 .pf-v__footer {
-  padding-top: 28px;
+  padding-top: 24px;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
+}
+.pf-v__footer .pf__btn {
+  width: auto;
+  min-width: 140px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+.pf-v__footer .pf__btn:hover {
+  background: #1e293b;
 }
 .pf-v__footer .pf__error {
   margin-top: 0;
+}
+
+/* Tally-style multiple choice list and key badges */
+.pf--vertical .pf-choices--list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+}
+.pf--vertical .pf-choice-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 38px;
+  padding: 6px 14px 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.pf--vertical .pf-choice-list:hover {
+  border-color: color-mix(in srgb, var(--foreground) 25%, var(--border));
+  background: color-mix(in srgb, var(--foreground) 3%, var(--card));
+}
+.pf--vertical .pf-choice-list--selected,
+.pf--vertical .pf-choice-list--selected:hover {
+  border: 1.5px solid var(--pf-primary);
+  background: var(--card);
+}
+.pf-choice-list__key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: #475569;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background-color 0.12s ease;
+}
+.pf-choice-list--selected .pf-choice-list__key {
+  background: var(--pf-primary);
+  color: #ffffff;
+}
+
+/* Tally-style input controls */
+.pf--vertical .pf-input,
+.pf--vertical .pf-textarea {
+  max-width: 480px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 13px;
+  font-size: 15px;
+  color: var(--foreground);
+  box-sizing: border-box;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.pf--vertical .pf-input:focus,
+.pf--vertical .pf-textarea:focus {
+  border-color: var(--pf-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pf-primary) 15%, transparent);
+}
+
+/* Tally-style Checkbox */
+.pf--vertical .pf-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+.pf--vertical .pf-checkbox__box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  accent-color: var(--pf-primary);
+  margin-top: 2px;
+  cursor: pointer;
+}
+.pf--vertical .pf-checkbox__text {
+  font-size: 15px;
+  color: var(--foreground);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Floating Made With badge like Tally */
+.pf--vertical .pf__attribution {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 40;
+  margin: 0;
+}
+.pf--vertical .pf-badge {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  color: #1f2937;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Auto-generated referral code widget */
+.pf-referral-widget {
+  margin-top: 6px;
+}
+.pf-referral-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--card);
+  border: 1.5px dashed color-mix(in srgb, var(--pf-primary) 60%, var(--border));
+  border-radius: 10px;
+  padding: 14px 20px;
+  min-width: 280px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.pf-referral-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pf-referral-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--pf-primary);
+  background: color-mix(in srgb, var(--pf-primary) 12%, transparent);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  line-height: 1;
+}
+.pf-referral-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.pf-referral-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--foreground);
+}
+.pf-referral-copy-btn {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.pf-referral-copy-btn:hover {
+  background: #1e293b;
 }
 
 /* Rows: two consecutive half-width questions (`steps[].width: 'half'`) share

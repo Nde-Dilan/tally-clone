@@ -41,7 +41,7 @@ export default async function LoginPage({
 
         <div className="w-full max-w-sm rounded-xl border border-border bg-card p-6">
           <h1 className="mb-1 text-xl font-semibold">{m.title}</h1>
-          <p className="mb-6 text-sm text-muted-foreground">{workos ? m.workosSubtitle : m.subtitle}</p>
+          <p className="mb-6 text-sm text-muted-foreground">{workos ? m.workosSubtitle : 'Sign in to access and manage your forms.'}</p>
           {/* A failed WorkOS login/callback comes back with ?error= — surface it
               with a retry CTA instead of a silent plain sign-in screen (R22). */}
           {error ? (
@@ -67,8 +67,6 @@ export default async function LoginPage({
             <LoginForm messages={m} />
           )}
         </div>
-
-        {!workos ? <p className="max-w-sm text-center text-xs text-muted-foreground">{m.footnote}</p> : null}
       </main>
     </>
   );

@@ -21,6 +21,57 @@ import { SearchableDropdown } from './searchable-dropdown';
 import { PhoneInput } from './phone-input';
 import { FileUploadInput, type RequestTicket } from './file-upload-input';
 
+function ReferralCodeWidget({
+  value,
+  step,
+  onChange,
+}: {
+  value: AnswerValue;
+  step: FormStep;
+  onChange: (value: AnswerValue) => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const code = String(value ?? '');
+
+  const copyCode = async () => {
+    if (!code) return;
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }
+    } catch {
+      // Fallback
+    }
+  };
+
+  return (
+    <div className="pf-referral-widget" data-testid="referral-code-widget">
+      <div className="pf-referral-card">
+        <div className="pf-referral-header">
+          <span className="pf-referral-tag">Auto-generated</span>
+        </div>
+        <div className="pf-referral-body">
+          <span className="pf-referral-code" data-testid="referral-code-value">
+            {code || 'Generating...'}
+          </span>
+          <button
+            type="button"
+            onClick={copyCode}
+            className="pf-referral-copy-btn"
+            title="Copy referral code"
+            aria-label="Copy referral code"
+          >
+            {copied ? '✓ Copied' : 'Copy'}
+          </button>
+        </div>
+      </div>
+      <input type="hidden" name={step.key} value={code} />
+    </div>
+  );
+}
+
 interface StepInputProps {
   step: FormStep;
   value: AnswerValue;
@@ -238,12 +289,13 @@ export function StepInput({
       // No text but a description: the description becomes the box's text.
       // Neither: a localized "I agree". Never the internal step key.
       const own = checkboxText(step);
-      const segments = parseInlineLinks(own.text ?? '');
+      const textToUse = (step.helper && step.question) ? step.helper : (own.text || getMessages(locale).renderer.checkboxDefault);
+      const segments = parseInlineLinks(textToUse);
       const text =
         segments.length > 0
           ? segments
-          : [{ kind: 'text' as const, text: getMessages(locale).renderer.checkboxDefault }];
-      const helper = own.helper?.trim();
+          : [{ kind: 'text' as const, text: textToUse }];
+      const helper = (step.helper && step.question) ? null : own.helper?.trim();
       return (
         <div className="pf-checkbox-field">
           <label className="pf-checkbox">
@@ -385,6 +437,9 @@ export function StepInput({
 
     case 'text':
     case 'email':
+      if (step.key === 'my_code') {
+        return <ReferralCodeWidget value={value} step={step} onChange={onChange} />;
+      }
       return (
         <input
           type={step.type === 'email' ? 'email' : 'text'}
@@ -546,8 +601,23 @@ export function StepInput({
         );
       }
       return (
-        <div className="pf-choices--list" role="radiogroup" aria-label={step.question ?? step.key}>
-          {(step.options ?? []).map((opt) => (
+        <div
+          className="pf-choices--list"
+          role="radiogroup"
+          aria-label={step.question ?? step.key}
+          onKeyDown={(e) => {
+            const key = e.key.toUpperCase();
+            const charCode = key.charCodeAt(0);
+            if (key.length === 1 && charCode >= 65 && charCode < 65 + (step.options?.length ?? 0)) {
+              const targetOpt = step.options?.[charCode - 65];
+              if (targetOpt) {
+                e.preventDefault();
+                onSelect(targetOpt.value);
+              }
+            }
+          }}
+        >
+          {(step.options ?? []).map((opt, idx) => (
             <button
               key={opt.value}
               type="button"
@@ -559,7 +629,9 @@ export function StepInput({
               {hasOptionIcon(opt, 'list') ? (
                 <OptionIcon option={opt} layout="list" />
               ) : (
-                <span className="pf-choice-list__radio" aria-hidden="true" />
+                <span className="pf-choice-list__key" aria-hidden="true">
+                  {String.fromCharCode(65 + idx)}
+                </span>
               )}
               <span className="pf-choice-list__text">{opt.label}</span>
             </button>

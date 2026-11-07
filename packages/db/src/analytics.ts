@@ -339,6 +339,91 @@ export async function completedSubmissions(
   });
 }
 
+/** Aggregated UTM & traffic attribution count. */
+export interface TrafficSourceCount {
+  source: string;
+  medium?: string | null;
+  campaign?: string | null;
+  total: number;
+  completed: number;
+  conversionRate: number | null;
+}
+
+/**
+ * Traffic attribution aggregated by source, medium, and campaign.
+ * Evaluates UTM parameters from submission data and referrer from visit.
+ */
+export async function trafficAttribution(
+  db: Db,
+  formId: string,
+  range?: DateRange,
+): Promise<TrafficSourceCount[]> {
+  const rows = await db.all<{
+    data: unknown;
+    visit: unknown;
+    completed_at: number | string | null;
+  }>(
+    sql`SELECT s.data, s.visit, s.completed_at
+        FROM submission s
+        WHERE s.form_id = ${formId}
+        ${andRange(submissionAnchor(), range)}`,
+  );
+
+  const groups = new Map<string, { source: string; medium: string | null; campaign: string | null; total: number; completed: number }>();
+
+  for (const r of rows) {
+    const data = parseJsonColumn(r.data, {}) as Record<string, unknown>;
+    const visit = readVisitColumn(r.visit);
+    const utm = (data.utm as Record<string, string> | undefined) ?? {};
+
+    let source = utm.utm_source?.trim() || '';
+    if (!source && visit?.pageUri) {
+      try {
+        const u = new URL(visit.pageUri);
+        source = u.searchParams.get('utm_source')?.trim() || u.searchParams.get('ref')?.trim() || '';
+      } catch {}
+    }
+    const rawReferrer = typeof data.referrer === 'string' ? data.referrer : undefined;
+    if (!source && rawReferrer) {
+      try {
+        const u = new URL(rawReferrer);
+        source = u.hostname.replace(/^www\./, '');
+      } catch {
+        source = rawReferrer.slice(0, 50);
+      }
+    }
+    if (!source) {
+      source = 'direct';
+    }
+
+    const medium = utm.utm_medium?.trim() || null;
+    const campaign = utm.utm_campaign?.trim() || null;
+    const key = `${source.toLowerCase()}::${(medium || '').toLowerCase()}::${(campaign || '').toLowerCase()}`;
+
+    let entry = groups.get(key);
+    if (!entry) {
+      entry = { source, medium, campaign, total: 0, completed: 0 };
+      groups.set(key, entry);
+    }
+    entry.total++;
+    if (r.completed_at != null) {
+      entry.completed++;
+    }
+  }
+
+  const result: TrafficSourceCount[] = [];
+  for (const entry of groups.values()) {
+    const rate = entry.total > 0 ? Math.round((entry.completed / entry.total) * 1000) / 10 : null;
+    result.push({
+      ...entry,
+      conversionRate: rate,
+    });
+  }
+
+  result.sort((a, b) => b.total - a.total);
+  return result;
+}
+
 /**
  * The per-session cohort-anchor day, restricted to sessions that also have at
  * least one row matching `eventFilter` — the shared shape behind both

@@ -96,6 +96,15 @@ import './public-form.css';
 
 type Phase = 'form' | 'reveal' | 'submitting' | 'booking' | 'done';
 
+function generateReferralCode(): string {
+  const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  let code = '';
+  for (let i = 0; i < 4; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return `KGL-${code}`;
+}
+
 /**
  * Does the respondent's answer to this step hold ANY content yet? Drives the
  * progress counter, the terminal cut and the completion events — deliberately
@@ -291,7 +300,12 @@ export function VerticalFormRenderer({
   // Embedded, a whole-screen swap starts at the frame's top, wherever the
   // visitor was scrolled: the host is asked to bring it into view.
   useAnnounceScreenChange(phase);
-  const [answers, setAnswers] = useState<Answers>({});
+  const [answers, setAnswers] = useState<Answers>(() => {
+    if (config.steps?.some((s) => s.key === 'my_code')) {
+      return { my_code: generateReferralCode() };
+    }
+    return {};
+  });
   // Set once the mount effect has read the reload draft: saving before that
   // would overwrite it with the empty answers of the first render.
   const [draftReady, setDraftReady] = useState(false);
@@ -483,7 +497,12 @@ export function VerticalFormRenderer({
   }, [sessionId, track]);
 
   const finalize = useCallback(
-    async (finalAnswers: Answers) => {
+    async (rawAnswers: Answers) => {
+      const finalAnswers = { ...rawAnswers };
+      if (!finalAnswers.my_code && engineConfig.steps.some((s) => s.key === 'my_code')) {
+        finalAnswers.my_code = generateReferralCode();
+      }
+      answersRef.current = finalAnswers;
       // With spam protection on and the footer on the page, the whole submit
       // happens at the button: the check sits right above it, the button reads
       // "Submitting…", and the page stays where the person is. Otherwise (no
@@ -990,7 +1009,7 @@ export function VerticalFormRenderer({
           locale={locale}
           onRequestUpload={requestUploadTicket}
           uploadMaxMb={uploadMaxMb}
-          showRequiredMark={step.required === true}
+          showRequiredMark={step.type !== 'checkbox' && step.required === true}
           invalid={Boolean(errors[step.key])}
         />
       )}
@@ -1047,17 +1066,22 @@ export function VerticalFormRenderer({
         <div className="pf-v__page">
           {design.design.showHeader ? (
             <header className="pf-v__header">
-              <FormLogo src={headerLogo} name={name} />
+              <FormLogo src={headerLogo} name={name} fallback={coverScreen ? 'none' : 'name'} />
             </header>
           ) : null}
 
           {coverScreen ? (
-            <section className="pf-v__hero pf-animate">
+            <section className="pf-v__hero">
               {coverScreen.eyebrow || coverScreen.badge ? (
                 <p className="pf__badge">{coverScreen.eyebrow ?? coverScreen.badge}</p>
               ) : null}
               <h1 className="pf__title">{coverScreen.headline ?? name}</h1>
-              {coverScreen.subheadline ? <p className="pf__subheadline">{coverScreen.subheadline}</p> : null}
+              {coverScreen.subheadline ? (
+                <div
+                  className="pf__subheadline"
+                  dangerouslySetInnerHTML={{ __html: coverScreen.subheadline }}
+                />
+              ) : null}
               {coverScreen.trustBadge ? <p className="pf__trust">{coverScreen.trustBadge}</p> : null}
               <ClientLogosMarquee logos={heroLogos} label={m.trustedBy} />
             </section>
@@ -1145,6 +1169,17 @@ function VerticalQuestion({
   // title stays only as the group's accessible name (StepInput paints them).
   const labelled = nameFieldLabels(step) !== null;
 
+  if (step.type === 'message') {
+    return (
+      <section ref={ref} className="pf-v__section-header" data-vf-step={step.key}>
+        <h2 className="pf-v__section-title">{step.question}</h2>
+        {step.helper ? (
+          <div className="pf-v__section-desc" dangerouslySetInnerHTML={{ __html: step.helper }} />
+        ) : null}
+      </section>
+    );
+  }
+
   return (
     <section
       ref={ref}
@@ -1152,20 +1187,19 @@ function VerticalQuestion({
       data-vf-step={step.key}
       onBlur={onBlur}
     >
-      {/* A checkbox's text sits beside its box (StepInput paints it): no title. */}
-      {step.type === 'checkbox' ? null : (
-        <div className="pf__question-wrap">
-          <h2 className={labelled ? 'pf__question sr-only' : 'pf__question'}>
-            {step.question ?? step.key}
-            {step.required && step.type !== 'message' ? (
-              <span aria-hidden className="pf-v__required">
-                *
-              </span>
-            ) : null}
-          </h2>
-          {step.helper && step.type !== 'message' ? <p className="pf__helper">{step.helper}</p> : null}
-        </div>
-      )}
+      <div className="pf__question-wrap">
+        <h2 className={labelled ? 'pf__question sr-only' : 'pf__question'}>
+          {step.question ?? step.key}
+          {step.required ? (
+            <span aria-hidden className="pf-v__required" title="Required">
+              *
+            </span>
+          ) : null}
+        </h2>
+        {step.helper && step.type !== 'checkbox' ? (
+          <p className="pf__helper">{step.helper}</p>
+        ) : null}
+      </div>
       <div className="pf__fields">
         {children}
         {error ? (

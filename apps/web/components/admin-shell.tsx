@@ -96,18 +96,6 @@ const NAV: NavItem[] = [
   { key: 'submissions', href: '/admin/submissions', icon: 'submissions' },
   { key: 'analytics', href: '/admin/analytics', icon: 'analytics' },
   { key: 'integrations', href: '/admin/integrations', icon: 'integrations' },
-  {
-    key: 'developers',
-    href: '/admin/developers/connect',
-    icon: 'mcp',
-    match: ['/admin/developers/connect', '/admin/developers/keys'],
-    prominent: true,
-  },
-  { key: 'tools', href: '/admin/developers/tools', icon: 'tools' },
-  { key: 'docs', href: '', icon: 'docs', external: true, localizedHref: 'docsHref' },
-  ...(PLATFORM_URL
-    ? [{ key: 'agents', href: suiteHref(PLATFORM_URL, 'sidebar'), icon: 'agents', external: true } as const]
-    : []),
 ];
 
 const NAV_COLLAPSED_KEY = 'forms.nav.collapsed';

@@ -672,6 +672,55 @@ export function FormEditor({
     mutate((c) => ({ ...c, branding: { ...c.branding, ...patch } }));
   const setScoring = (enabled: boolean) => mutate((c) => ({ ...c, scoring: { enabled } }));
   const setOutcomes = (outcomes: FormOutcome[]) => mutate((c) => ({ ...c, outcomes }));
+
+  function duplicateStep(index: number) {
+    mutate((c) => {
+      const original = c.steps[index];
+      if (!original) return c;
+      const taken = new Set(c.steps.map((s) => s.key));
+      let suffix = 1;
+      let newKey = `${original.key}_copy`;
+      while (taken.has(newKey)) {
+        suffix++;
+        newKey = `${original.key}_copy_${suffix}`;
+      }
+      const copy: FormStep = {
+        ...structuredClone(original),
+        key: newKey,
+        question: original.question ? `${original.question} (Copy)` : 'Copy',
+      };
+      const nextSteps = [...c.steps];
+      nextSteps.splice(index + 1, 0, copy);
+      setSelected(index + 1);
+      return {
+        ...c,
+        steps: nextSteps,
+      };
+    });
+    setFocusCanvas((n) => n + 1);
+  }
+
+  function insertStepAtIndex(index: number, item: GalleryItem) {
+    mutate((c) => {
+      const step = stepFromGalleryItem(item, new Set(c.steps.map((s) => s.key)));
+      const nextSteps = [...c.steps];
+      const target = Math.min(Math.max(index + 1, 0), nextSteps.length);
+      nextSteps.splice(target, 0, step);
+      const steps = resolveFormLayout(c) === 'vertical' ? anchorRevealsLast(nextSteps) : nextSteps;
+      setSelected(steps.findIndex((s) => s.key === step.key));
+      return {
+        ...c,
+        steps,
+      };
+    });
+    setFocusCanvas((n) => n + 1);
+  }
+
+  function moveStepByOffset(from: number, delta: number) {
+    const to = from + delta;
+    if (to < 0 || to >= config.steps.length) return;
+    reorderSteps(from, to);
+  }
   /**
    * The per-question "Show reveal screen after" switch. A reveal is a STEP now,
    * so this inserts (or removes) a real reveal card immediately after `index`
@@ -1165,7 +1214,45 @@ export function FormEditor({
                       </span>
                     );
                   })()}
-                  <DeviceToggle device={device} onChange={setDevice} m={bm} />
+                  <div className="flex items-center gap-2">
+                    <div
+                      role="radiogroup"
+                      aria-label="Editor Layout"
+                      className="inline-flex shrink-0 items-center gap-0.5 rounded-full border border-input bg-card p-0.5"
+                    >
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={layout === 'vertical'}
+                        onClick={() => setLayout('vertical')}
+                        data-testid="layout-switch-document"
+                        className={cn(
+                          'rounded-full px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                          layout === 'vertical'
+                            ? 'bg-foreground text-background'
+                            : 'text-muted-foreground hover:text-foreground',
+                        )}
+                      >
+                        Document Flow
+                      </button>
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked={layout === 'slides'}
+                        onClick={() => setLayout('slides')}
+                        data-testid="layout-switch-slides"
+                        className={cn(
+                          'rounded-full px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                          layout === 'slides'
+                            ? 'bg-foreground text-background'
+                            : 'text-muted-foreground hover:text-foreground',
+                        )}
+                      >
+                        Slide by Slide
+                      </button>
+                    </div>
+                    <DeviceToggle device={device} onChange={setDevice} m={bm} />
+                  </div>
                 </div>
                 <div className="flex-1 px-4 py-6 sm:px-8">
                   {selectedStep && selected != null ? (
@@ -1181,6 +1268,10 @@ export function FormEditor({
                         onSelect={setSelected}
                         onUpdateStep={patchStep}
                         onOptionLabel={setOptionLabel}
+                        onInsertStep={insertStepAtIndex}
+                        onDuplicateStep={duplicateStep}
+                        onDeleteStep={deleteStep}
+                        onMoveStep={moveStepByOffset}
                         m={bm}
                       />
                     ) : selectedScreen ? (

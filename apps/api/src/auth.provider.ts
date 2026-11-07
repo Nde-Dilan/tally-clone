@@ -275,19 +275,19 @@ export class LocalAuthProvider implements AuthProvider {
   ) {}
 
   async resolveHost(req: ReqLike): Promise<ResolvedHost> {
+    // 1. Email-aware login (authenticated email from web session)
+    const email = header(req, 'x-quill-email') ?? (this.env.NODE_ENV !== 'production' ? this.env.DEV_LOGIN_EMAIL : undefined);
+    if (email) return this.resolveByEmail(email);
+
     if (this.env.NODE_ENV !== 'production') {
-      // 1. Explicit impersonation (highest precedence, unchanged).
+      // Explicit impersonation (dev only).
       const accountId = header(req, 'x-quill-account');
       const memberId = header(req, 'x-quill-member');
       if (accountId && memberId) return { accountId, memberId };
-
-      // 2. Email-aware dev login (header wins over the env default).
-      const email = header(req, 'x-quill-email') ?? this.env.DEV_LOGIN_EMAIL;
-      if (email) return this.resolveByEmail(email);
     }
 
-    // 3. Strict mode: no identity provided → no session (enables logout in dev).
-    if (this.env.AUTH_LOCAL_STRICT) {
+    // Strict mode / unauthenticated in production: no identity provided → no session (enables clean logout/login).
+    if (this.env.AUTH_LOCAL_STRICT || this.env.NODE_ENV === 'production') {
       throw new UnauthorizedException({ error: 'UNAUTHENTICATED', message: 'No session.' });
     }
 

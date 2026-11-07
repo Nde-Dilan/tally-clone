@@ -445,6 +445,12 @@ export function DoneScreen({
         <p className="pf-done__body">
           {ending.body ? interpolate(ending.body, answers) : m.thankYouBody}
         </p>
+        {answers.my_code ? (
+          <div className="pf-done__referral" data-testid="done-referral-code">
+            <span className="pf-done__referral-label">Your Referral Code</span>
+            <span className="pf-done__referral-code">{String(answers.my_code)}</span>
+          </div>
+        ) : null}
         {cta ? (
           <>
             <p className="pf-done__cta-question">{m.ctaQuestion}</p>

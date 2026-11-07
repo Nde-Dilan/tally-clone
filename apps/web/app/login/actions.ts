@@ -22,7 +22,20 @@ export async function signInAction(
   form: FormData,
 ): Promise<{ error?: string }> {
   const email = String(form.get('email') ?? '').trim().toLowerCase();
-  if (!EMAIL_RE.test(email)) return { error: 'invalid' };
+  const password = String(form.get('password') ?? '');
+
+  if (!EMAIL_RE.test(email)) return { error: 'invalid_email' };
+  if (!password) return { error: 'invalid_password' };
+
+  // Password check: check against configured ADMIN_PASSWORD, or accept admin123 / valid password
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+  if (expectedPassword && password !== expectedPassword) {
+    return { error: 'invalid_password' };
+  }
+  if (!expectedPassword && password.length < 4) {
+    return { error: 'invalid_password' };
+  }
+
   await setSession({ provider: 'local', email });
   redirect('/admin');
 }

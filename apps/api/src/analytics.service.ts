@@ -26,6 +26,7 @@ import {
   completedSubmissions,
   dailyViewSessions,
   dailyStartSessions,
+  trafficAttribution,
   DAY_MS,
   querySubmissions,
   allSubmissionsForExport,
@@ -99,6 +100,13 @@ function completionPct(submissions: number, starts: number): number | null {
 function medianSeconds(durationsMs: number[]): number | null {
   if (durationsMs.length === 0) return null;
   return Math.round(median(durationsMs) / 1000);
+}
+
+/** Average / mean seconds from a list of ms durations, or null when none is derivable. */
+function averageSeconds(durationsMs: number[]): number | null {
+  if (durationsMs.length === 0) return null;
+  const sum = durationsMs.reduce((a, b) => a + b, 0);
+  return Math.round(sum / durationsMs.length / 1000);
 }
 
 /**
@@ -230,7 +238,7 @@ export class AnalyticsService {
     // slides keeps "reached the step" (step_view).
     const dropoffMode = resolveFormLayout(config) === 'vertical' ? 'answered' : 'viewed';
 
-    const [views, starts, stepViews, partialSubmits, bookings, completed, dailyViews, dailyStarts] =
+    const [views, starts, stepViews, partialSubmits, bookings, completed, dailyViews, dailyStarts, trafficSources] =
       await Promise.all([
         uniqueViewCount(this.db, formId, range),
         startCount(this.db, formId, range),
@@ -242,9 +250,10 @@ export class AnalyticsService {
         completedSubmissions(this.db, formId, range, bucketing),
         dailyViewSessions(this.db, formId, range, bucketing),
         dailyStartSessions(this.db, formId, range, bucketing),
+        trafficAttribution(this.db, formId, range),
       ]);
 
-    // One completed-submission read feeds the total, the median and the trend.
+    // One completed-submission read feeds the total, the median, the average and the trend.
     const submissions = completed.length;
     const durations = completed
       .map((c) => c.durationMs)
@@ -253,6 +262,8 @@ export class AnalyticsService {
     // Median open→complete in whole seconds, or null when no session in range
     // had a derivable open time (never 0 — that would be a fabricated fact).
     const timeToComplete = medianSeconds(durations);
+    const medianTimeToComplete = timeToComplete;
+    const avgTimeToComplete = averageSeconds(durations);
     const trends = buildTrends({ range, zone, dailyViews, dailyStarts, completed });
 
     // rowViews[0] = form views (the cover/landing); rowViews[i+1] = views of
@@ -310,11 +321,14 @@ export class AnalyticsService {
       submissions,
       completionRate,
       timeToComplete,
+      medianTimeToComplete,
+      avgTimeToComplete,
       partialSubmits,
       bookings,
       dropoffMode,
       dropoff,
       trends,
+      trafficSources,
       range: { from: range.from ?? null, to: range.to ?? null, timeZone: zone },
     };
   }

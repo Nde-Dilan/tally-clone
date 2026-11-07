@@ -1609,6 +1609,16 @@ export const trendPointSchema = z.object({
 });
 export type TrendPoint = z.infer<typeof trendPointSchema>;
 
+export const trafficSourceRowSchema = z.object({
+  source: z.string(),
+  medium: z.string().nullable().optional(),
+  campaign: z.string().nullable().optional(),
+  total: z.number().int(),
+  completed: z.number().int(),
+  conversionRate: z.number().nullable(),
+});
+export type TrafficSourceRow = z.infer<typeof trafficSourceRowSchema>;
+
 /** The funnel summary + drop-off table for a form over an optional date range. */
 export const analyticsResponseSchema = z.object({
   /** Unique sessions that viewed the form (distinct session_id on `view`). */
@@ -1630,6 +1640,10 @@ export const analyticsResponseSchema = z.object({
    * the fabricated fact this metric was rewritten to remove.
    */
   timeToComplete: z.number().int().nullable(),
+  /** Explicit median completion time in whole seconds. */
+  medianTimeToComplete: z.number().int().nullable().optional(),
+  /** Mean / Average whole seconds from form open to completion. */
+  avgTimeToComplete: z.number().int().nullable().optional(),
   /** Partial-only submissions (partialAt set, completedAt null). */
   partialSubmits: z.number().int(),
   /**
@@ -1648,6 +1662,8 @@ export const analyticsResponseSchema = z.object({
   dropoff: z.array(dropoffRowSchema),
   /** Gap-filled per-day series for the Trends chart (oldest → newest). */
   trends: z.array(trendPointSchema),
+  /** First-party traffic attribution breakdown by UTM parameters & referrers. */
+  trafficSources: z.array(trafficSourceRowSchema).optional().default([]),
   /** Echoes the resolved range (epoch ms) so the client can render it. */
   range: z.object({
     from: z.number().nullable(),

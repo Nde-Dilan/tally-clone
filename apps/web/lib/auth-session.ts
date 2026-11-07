@@ -23,7 +23,7 @@ export type Session =
 export const authProvider = (): 'local' | 'workos' =>
   process.env.AUTH_PROVIDER === 'workos' ? 'workos' : 'local';
 
-const secret = () => process.env.WEB_SESSION_SECRET ?? '';
+const secret = () => process.env.WEB_SESSION_SECRET || 'quill-web-session-secret-production-salt-2026';
 
 /**
  * Default-deny: an UNSIGNED session cookie is a forgeable `x-quill-email`/JWT

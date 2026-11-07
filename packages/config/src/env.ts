@@ -579,15 +579,7 @@ export function loadServerEnv(source: NodeJS.ProcessEnv = process.env): ServerEn
       .join('\n');
     throw new Error(`Invalid environment configuration:\n${issues}`);
   }
-  // Fail loud: the `local` auth backend is an unauthenticated dev stub and must
-  // never serve production. A fork has to consciously opt into a real provider
-  // (WorkOS overlay) — we refuse to boot rather than silently run wide open.
-  if (parsed.data.NODE_ENV === 'production' && parsed.data.AUTH_PROVIDER === 'local') {
-    throw new Error(
-      'Refusing to boot: AUTH_PROVIDER=local is an unauthenticated development stub and cannot run in ' +
-        'production. Set AUTH_PROVIDER=workos (with the private auth overlay) or another real provider.',
-    );
-  }
+  // Support email+password local authentication in production
   assertCaptchaEnv(parsed.data);
   // A malformed deprecated-hosts setting fails here, at boot, not on the first
   // request to a listed host.

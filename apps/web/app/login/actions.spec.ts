@@ -29,9 +29,53 @@ vi.mock('next/headers', () => ({
   headers: vi.fn(async () => new Headers({ host: 'forms.example.com', 'x-forwarded-proto': 'https' })),
 }));
 
-import { signOutAction } from './actions';
+import { signInAction, signOutAction } from './actions';
 
 const workosSession = { provider: 'workos', accessToken: 'tok', sessionId: 'session_123' };
+
+describe('signInAction', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('rejects invalid email', async () => {
+    const fd = new FormData();
+    fd.set('email', 'not-an-email');
+    fd.set('password', 'admin123');
+    const res = await signInAction(null, fd);
+    expect(res).toEqual({ error: 'invalid_email' });
+  });
+
+  it('rejects empty password', async () => {
+    const fd = new FormData();
+    fd.set('email', 'alex@example.com');
+    fd.set('password', '');
+    const res = await signInAction(null, fd);
+    expect(res).toEqual({ error: 'invalid_password' });
+  });
+
+  it('rejects wrong password when ADMIN_PASSWORD is set', async () => {
+    vi.stubEnv('ADMIN_PASSWORD', 'supersecret');
+    const fd = new FormData();
+    fd.set('email', 'alex@example.com');
+    fd.set('password', 'wrongpassword');
+    const res = await signInAction(null, fd);
+    expect(res).toEqual({ error: 'invalid_password' });
+  });
+
+  it('accepts correct password and sets session', async () => {
+    vi.stubEnv('ADMIN_PASSWORD', 'supersecret');
+    const fd = new FormData();
+    fd.set('email', 'alex@example.com');
+    fd.set('password', 'supersecret');
+    await expect(signInAction(null, fd)).rejects.toThrow('NEXT_REDIRECT:/admin');
+    expect(setSession).toHaveBeenCalledWith({ provider: 'local', email: 'alex@example.com' });
+  });
+});
 
 describe('signOutAction', () => {
   beforeEach(() => {

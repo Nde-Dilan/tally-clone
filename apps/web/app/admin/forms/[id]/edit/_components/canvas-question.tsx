@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
 import type { FormConfig, FormStep } from '@quill/engine';
 import {
   nameFields,
@@ -21,7 +21,7 @@ import { onAccent, DEFAULT_ACCENT, getMessages, resolveThemeMode } from '@quill/
 import { resolveFormLabels } from '@quill/shared';
 import { clientLocale } from '@/lib/client-locale';
 import { cn } from '@/lib/cn';
-import { galleryIdForStep, iconForStep, hasOptions } from './question-types';
+import { galleryIdForStep, iconForStep, hasOptions, type GalleryItem } from './question-types';
 import { maxStepPoints } from './scoring-util';
 import type { BuilderMessages } from './builder-messages';
 import { tb } from './builder-messages';
@@ -794,6 +794,91 @@ function CheckboxPreview({ step, centred, fallback }: { step: FormStep; centred:
  * so switching questions FEELS like moving down one page — which is exactly
  * what it is.
  */
+/**
+ * Quick inline block inserter that displays between blocks on the document canvas.
+ */
+function InlineBlockInserter({
+  onInsert,
+  label = 'Add block',
+}: {
+  onInsert: (item: GalleryItem) => void;
+  label?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
+
+  const quickItems: Array<{ id: string; item: GalleryItem; label: string; icon: string }> = [
+    { id: 'short', item: { id: 'short', type: 'text', icon: 'pi-minus' }, label: 'Short answer', icon: 'pi-minus' },
+    { id: 'long', item: { id: 'long', type: 'textarea', icon: 'pi-align-left' }, label: 'Long text', icon: 'pi-align-left' },
+    { id: 'single', item: { id: 'single', type: 'multiple_choice', selectionMode: 'single', icon: 'pi-circle' }, label: 'Multiple choice', icon: 'pi-circle' },
+    { id: 'dropdown', item: { id: 'dropdown', type: 'dropdown', icon: 'pi-chevron-down' }, label: 'Dropdown', icon: 'pi-chevron-down' },
+    { id: 'slider', item: { id: 'slider', type: 'slider', icon: 'pi-sliders-h' }, label: 'Slider / Scale', icon: 'pi-sliders-h' },
+    { id: 'email', item: { id: 'email', type: 'email', icon: 'pi-envelope' }, label: 'Email', icon: 'pi-envelope' },
+    { id: 'name', item: { id: 'name', type: 'name', icon: 'pi-user' }, label: 'Full name', icon: 'pi-user' },
+    { id: 'phone', item: { id: 'phone', type: 'phone', icon: 'pi-phone' }, label: 'Phone', icon: 'pi-phone' },
+    { id: 'file', item: { id: 'file', type: 'file', icon: 'pi-paperclip' }, label: 'File upload', icon: 'pi-paperclip' },
+    { id: 'message', item: { id: 'message', type: 'message', icon: 'pi-comment' }, label: 'Statement / Text', icon: 'pi-comment' },
+  ];
+
+  return (
+    <div ref={ref} className="group/inserter relative flex items-center justify-center py-2 transition-all">
+      <div className="absolute inset-x-0 h-px bg-border/40 transition-colors group-hover/inserter:bg-primary/40" />
+      <button
+        type="button"
+        onClick={() => setOpen((v: boolean) => !v)}
+        data-testid="inline-add-block-btn"
+        className="relative z-10 inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground shadow-sm transition-all hover:scale-105 hover:border-primary hover:text-foreground active:scale-95"
+      >
+        <i aria-hidden className="pi pi-plus text-[10px]" />
+        <span>{label}</span>
+      </button>
+
+      {open && (
+        <div
+          data-testid="inline-block-menu"
+          className="absolute top-full z-50 mt-1 max-h-64 w-56 overflow-y-auto rounded-xl border border-border bg-popover p-1.5 shadow-xl animate-in fade-in zoom-in-95"
+        >
+          <div className="px-2 py-1 text-2xs font-semibold uppercase tracking-wider text-faint">
+            Insert block
+          </div>
+          <div className="flex flex-col gap-0.5">
+            {quickItems.map(({ id, item, label: itemLabel, icon }) => (
+              <button
+                key={id}
+                type="button"
+                data-testid={`insert-type-${id}`}
+                onClick={() => {
+                  onInsert(item);
+                  setOpen(false);
+                }}
+                className="flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium text-foreground transition-colors hover:bg-muted"
+              >
+                <i aria-hidden={`true`} className={`pi ${icon} text-muted-foreground`} style={{ fontSize: 13 }} />
+                <span>{itemLabel}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The form's editable page canvas for document-flow forms: every question
+ * stacked on one scrollable sheet, inline block inserters, and block actions.
+ */
 export function CanvasPage({
   config,
   selected,
@@ -802,6 +887,10 @@ export function CanvasPage({
   onSelect,
   onUpdateStep,
   onOptionLabel,
+  onInsertStep,
+  onDuplicateStep,
+  onDeleteStep,
+  onMoveStep,
   m,
 }: {
   config: FormConfig;
@@ -813,39 +902,33 @@ export function CanvasPage({
   onUpdateStep: (index: number, patch: Partial<FormStep>) => void;
   /** Write one step's option label; the value may follow it. See `setOptionLabel`. */
   onOptionLabel: (stepIndex: number, optionIndex: number, label: string) => void;
+  onInsertStep?: (atIndex: number, item: GalleryItem) => void;
+  onDuplicateStep?: (index: number) => void;
+  onDeleteStep?: (index: number) => void;
+  onMoveStep?: (fromIndex: number, delta: number) => void;
   m: BuilderMessages;
 }) {
-  // The author's exact color, like every other surface — nothing corrects a
-  // chosen color any more.
   const accent = config.branding?.primaryColor?.trim() || DEFAULT_ACCENT;
   const accentText = onAccent(accent);
   const blockRefs = useRef<Map<string, HTMLElement>>(new Map());
 
-  // Selection navigates the page: scroll the picked block into view. Skipped
-  // for plain in-page clicks (the block is already on screen — jumping would
-  // yank the page under the author's cursor); a click's own scroll is a no-op
-  // because the browser only scrolls to something out of view.
   const selectedKey = config.steps[selected]?.key;
   useEffect(() => {
     if (!selectedKey) return;
     blockRefs.current.get(selectedKey)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [selectedKey]);
 
-  // A just-added question lands selected at the end — put the caret in its title.
   useEffect(() => {
     if (!focusSignal || !selectedKey) return;
     const el = blockRefs.current.get(selectedKey)?.querySelector('textarea');
     (el as HTMLTextAreaElement | null)?.focus();
   }, [focusSignal]);
 
-  // Compact density drops the lines between questions and tightens each block,
-  // as the public one-page form does.
   const pageDesign = resolveDesign(config.branding);
   const compact = pageDesign.density === 'compact';
-  // The Submit stays a solid accent fill here whatever the style; only a solid
-  // button takes the author's own label colour, as on the public form.
   const submitText =
     (pageDesign.buttonStyle === 'solid' && config.branding?.buttonTextColor?.trim()) || accentText;
+
   const renderBlock = (i: number) => {
     const step = config.steps[i]!;
     return (
@@ -857,23 +940,86 @@ export function CanvasPage({
         }}
         data-testid={`page-block-${i}`}
         aria-current={i === selected || undefined}
-        // Focus/click anywhere in a block selects it, so the settings
-        // panel always describes the question under the caret.
         onMouseDownCapture={() => onSelect(i)}
         onFocusCapture={() => onSelect(i)}
         className={cn(
-          'scroll-my-16 px-6 transition-colors sm:px-8',
+          'group/block scroll-my-16 px-6 transition-colors sm:px-8',
           compact ? 'py-3' : 'py-6',
-          // The accent EDGE at full alpha, not `ring-primary/40`: this is the
-          // canvas's ONLY answer to "which question is the settings panel
-          // describing", and the raw accent at 40% alpha flattened to well
-          // under 3:1 over paper — the block you were editing looked exactly
-          // like the ones you weren't. Full alpha on the edge token so the
-          // mark clears 1.4.11 in both themes; the `bg-primary/5` wash keeps
-          // the soft fill it always had.
           i === selected ? 'bg-primary/5 shadow-[inset_0_0_0_1px_var(--primary-edge)]' : 'hover:bg-muted/40',
         )}
       >
+        {/* Block Header with Actions */}
+        <div className="mb-2 flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <i aria-hidden className={`pi ${iconForStep(step)}`} style={{ fontSize: 12 }} />
+            <span>Question {i + 1}</span>
+            <span className="font-mono text-2xs text-faint">({step.key})</span>
+          </div>
+
+          <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover/block:opacity-100 focus-within:opacity-100">
+            {onMoveStep && (
+              <>
+                <button
+                  type="button"
+                  title="Move Up"
+                  aria-label="Move question up"
+                  disabled={i === 0}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMoveStep(i, -1);
+                  }}
+                  className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20"
+                >
+                  <i className="pi pi-arrow-up text-[11px]" />
+                </button>
+                <button
+                  type="button"
+                  title="Move Down"
+                  aria-label="Move question down"
+                  disabled={i === config.steps.length - 1}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMoveStep(i, 1);
+                  }}
+                  className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20"
+                >
+                  <i className="pi pi-arrow-down text-[11px]" />
+                </button>
+              </>
+            )}
+            {onDuplicateStep && (
+              <button
+                type="button"
+                title="Duplicate"
+                aria-label="Duplicate question"
+                data-testid={`duplicate-step-${i}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDuplicateStep(i);
+                }}
+                className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+              >
+                <i className="pi pi-copy text-[11px]" />
+              </button>
+            )}
+            {onDeleteStep && config.steps.length > 1 && (
+              <button
+                type="button"
+                title="Delete"
+                aria-label="Delete question"
+                data-testid={`delete-step-${i}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteStep(i);
+                }}
+                className="rounded p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+              >
+                <i className="pi pi-trash text-[11px]" />
+              </button>
+            )}
+          </div>
+        </div>
+
         {step.type === 'reveal' ? (
           <RevealPageBlock step={step} onUpdate={(patch) => onUpdateStep(i, patch)} m={m} />
         ) : (
@@ -882,6 +1028,7 @@ export function CanvasPage({
             step={step}
             index={i}
             accent={accent}
+            eyebrow={false}
             onUpdate={(patch) => onUpdateStep(i, patch)}
             onePage
             onOptionLabel={(optionIndex, label) => onOptionLabel(i, optionIndex, label)}
@@ -903,23 +1050,27 @@ export function CanvasPage({
         )}
       >
         <div className={cn('flex flex-col', !compact && 'divide-y divide-border')}>
-          {/* Rows over the AUTHORED steps, in order: the canvas shows hidden and
-              conditional questions too, so a hidden step breaks a pair here.
-              The public form pairs over its live walk (after logic) instead, so
-              the two can differ while logic hides a question. Accepted. */}
-          {onePageRows(config.steps).map((row) =>
-            row.length === 1 ? (
-              renderBlock(row[0]!)
-            ) : (
-              <div
-                key={`row:${config.steps[row[0]!]!.key}`}
-                data-testid={`page-row-${row[0]}`}
-                className={cn('grid gap-x-4', device === 'mobile' ? 'grid-cols-1' : 'grid-cols-2')}
-              >
-                {row.map(renderBlock)}
-              </div>
-            ),
+          {onInsertStep && (
+            <InlineBlockInserter label="Add block at top" onInsert={(item) => onInsertStep(-1, item)} />
           )}
+
+          {onePageRows(config.steps).map((row) => (
+            <div key={`row-wrap-${row[0]}`}>
+              {row.length === 1 ? (
+                renderBlock(row[0]!)
+              ) : (
+                <div
+                  data-testid={`page-row-${row[0]}`}
+                  className={cn('grid gap-x-4', device === 'mobile' ? 'grid-cols-1' : 'grid-cols-2')}
+                >
+                  {row.map(renderBlock)}
+                </div>
+              )}
+              {onInsertStep && (
+                <InlineBlockInserter onInsert={(item) => onInsertStep(row[row.length - 1]!, item)} />
+              )}
+            </div>
+          ))}
 
           {/* The page's ONE Submit — static chrome, exactly like the real form. */}
           <div className="px-6 py-6 sm:px-8">
