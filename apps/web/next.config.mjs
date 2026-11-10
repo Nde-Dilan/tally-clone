@@ -34,6 +34,7 @@ const nextConfig = {
   // Node runtime only — deployment-agnostic (self-host on any Node/Docker host
   // AND one-click Vercel). No Vercel-only APIs.
   output: 'standalone',
+  serverExternalPackages: ['better-sqlite3'],
   // Anchor Turbopack to this monorepo (a stray lockfile elsewhere can mislead it).
   turbopack: {
     root: join(here, '..', '..'),

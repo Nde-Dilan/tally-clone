@@ -30,10 +30,18 @@ async function getJson<T>(path: string): Promise<T | null> {
 
 // cache(): generateMetadata and the page share one fetch per request.
 export const getPublicForm = cache(
-  (accountCode: string, slug: string): Promise<PublicForm | null> =>
-    getJson<PublicForm>(
+  async (accountCode: string, slug: string): Promise<PublicForm | null> => {
+    try {
+      const { submissionService } = await import('@/server/services/submission.service');
+      const form = await submissionService.publicForm(accountCode, slug);
+      if (form) return form;
+    } catch {
+      // In-process resolution fallback to HTTP
+    }
+    return getJson<PublicForm>(
       `/v1/public/forms/${encodeURIComponent(accountCode)}/${encodeURIComponent(slug)}`,
-    ),
+    );
+  },
 );
 
 /**

@@ -48,6 +48,76 @@ export interface ReqOptions {
 }
 
 async function req<T>(method: string, path: string, body?: unknown, opts: ReqOptions = {}): Promise<T> {
+  // 1. Direct in-process execution (Unified Next.js serverless architecture)
+  try {
+    const { resolveHostPrincipal } = await import('@/server/auth/host-auth');
+    const { adminService } = await import('@/server/services/admin.service');
+
+    const principal = await resolveHostPrincipal();
+
+    if (method === 'GET' && path === '/v1/me') {
+      return (await adminService.me(principal)) as unknown as T;
+    }
+    if (method === 'GET' && path === '/v1/forms') {
+      return (await adminService.listForms(principal.accountId)) as unknown as T;
+    }
+    if (method === 'GET' && path.startsWith('/v1/forms/')) {
+      const cleanPath = (path || '').split('?')[0] || '';
+      const parts = cleanPath.split('/');
+      const p3 = parts[3] || '';
+      const p4 = parts[4] || '';
+      // /v1/forms/:id/analytics
+      if (p4 === 'analytics') {
+        const queryStr = path.includes('?') ? path.split('?')[1] : '';
+        const sp = new URLSearchParams(queryStr);
+        const from = sp.get('from') ? Number(sp.get('from')) : undefined;
+        const to = sp.get('to') ? Number(sp.get('to')) : undefined;
+        const tz = sp.get('tz') ?? undefined;
+        return (await adminService.getAnalytics(principal.accountId, p3, { from, to, tz })) as unknown as T;
+      }
+      // /v1/forms/:id/submissions
+      if (p4 === 'submissions') {
+        return (await adminService.listSubmissions(principal.accountId, p3)) as unknown as T;
+      }
+      // /v1/forms/:id
+      if (parts.length === 4 && p3) {
+        const form = await adminService.getForm(principal.accountId, p3);
+        if (form) return form as unknown as T;
+      }
+    }
+    if (method === 'POST' && path === '/v1/forms') {
+      return (await adminService.createForm(principal.accountId, body as any)) as unknown as T;
+    }
+    if (method === 'PUT' && path.startsWith('/v1/forms/') && path.split('/').length === 4) {
+      const parts = path.split('/');
+      const p3 = parts[3] || '';
+      return (await adminService.updateForm(principal.accountId, p3, body as any)) as unknown as T;
+    }
+    if (method === 'POST' && path.endsWith('/publish')) {
+      const parts = path.split('/');
+      const p3 = parts[3] || '';
+      return (await adminService.publishForm(principal.accountId, p3)) as unknown as T;
+    }
+    if (method === 'POST' && path.endsWith('/duplicate')) {
+      const parts = path.split('/');
+      const p3 = parts[3] || '';
+      return (await adminService.duplicateForm(principal.accountId, p3)) as unknown as T;
+    }
+    if (method === 'DELETE' && path.startsWith('/v1/forms/') && path.split('/').length === 4) {
+      const parts = path.split('/');
+      const p3 = parts[3] || '';
+      return (await adminService.deleteForm(principal.accountId, p3)) as unknown as T;
+    }
+    if (method === 'GET' && (path === '/v1/workspaces' || path === '/v1/account/workspaces')) {
+      return (await adminService.listWorkspaces(principal)) as unknown as T;
+    }
+  } catch (err: any) {
+    if (err?.message === 'UNAUTHENTICATED') {
+      redirect('/login');
+    }
+    // Fall through to HTTP fetch fallback below
+  }
+
   const session = await getSession();
   // Which workspace, asked separately from who — and read from its own cookie,
   // because the local provider serves developers who have no session at all.

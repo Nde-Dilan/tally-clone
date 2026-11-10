@@ -117,12 +117,21 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@19.2.7)
+      '@quill/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@quill/destinations':
+        specifier: workspace:*
+        version: link:../../packages/destinations
       '@quill/engine':
         specifier: workspace:*
         version: link:../../packages/engine
       '@quill/mcp':
         specifier: workspace:*
         version: link:../../packages/mcp
+      '@quill/notifications':
+        specifier: workspace:*
+        version: link:../../packages/notifications
       '@quill/shared':
         specifier: workspace:*
         version: link:../../packages/shared
