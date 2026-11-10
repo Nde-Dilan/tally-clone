@@ -15,6 +15,10 @@ export async function POST(
     return NextResponse.json({ error: 'BAD_REQUEST', message: 'Invalid JSON body.' }, { status: 400 });
   }
 
-  const result = await submissionService.event(accountCode, slug, body);
-  return NextResponse.json(result, { status: result.ok ? 202 : 400 });
+  try {
+    const result = await submissionService.event(accountCode, slug, body);
+    return NextResponse.json(result, { status: result.ok ? 202 : 400 });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'SERVER_ERROR', message: String(err?.message || err) }, { status: 500 });
+  }
 }

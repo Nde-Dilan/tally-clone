@@ -1,0 +1,724 @@
+{
+  "account": {
+    "id": "7fb477bb-8f2b-4c6b-86a6-eaee4a412ac5",
+    "code": "acme",
+    "name": "Acme Inc.",
+    "vanitySlug": null,
+    "externalId": null,
+    "createdAt": 1794034721183
+  },
+  "members": [
+    {
+      "id": "784325bf-0a41-4e8a-bc70-915cacbd00cd",
+      "accountId": "7fb477bb-8f2b-4c6b-86a6-eaee4a412ac5",
+      "email": "alex@example.com",
+      "displayName": "Alex Rivera",
+      "role": "owner",
+      "status": "active",
+      "createdAt": 1794034721183
+    }
+  ],
+  "forms": [
+    {
+      "id": "3ffdbdb2-cd83-47a3-9357-f4f87f5878b7",
+      "accountId": "7fb477bb-8f2b-4c6b-86a6-eaee4a412ac5",
+      "name": "Lead Qualifier",
+      "slug": "lead-qualifier",
+      "config": {
+        "version": 1,
+        "cover": {
+          "enabled": true,
+          "eyebrow": "Quick check",
+          "headline": "See if we are a fit",
+          "subheadline": "Answer a few questions: takes under a minute.",
+          "ctaText": "Start"
+        },
+        "steps": [
+          {
+            "key": "role",
+            "type": "dropdown",
+            "question": "What best describes you?",
+            "required": true,
+            "flowGroup": "qualification",
+            "options": [
+              {
+                "label": "Founder / Owner",
+                "value": "founder",
+                "points": 10
+              },
+              {
+                "label": "Team lead",
+                "value": "lead",
+                "points": 6
+              },
+              {
+                "label": "Individual",
+                "value": "individual",
+                "points": 2
+              }
+            ]
+          },
+          {
+            "key": "team_size",
+            "type": "slider",
+            "question": "How big is your team?",
+            "flowGroup": "qualification",
+            "min": 1,
+            "max": 100,
+            "default": 5,
+            "sliderScoring": [
+              {
+                "min": 1,
+                "max": 9,
+                "points": 2
+              },
+              {
+                "min": 10,
+                "max": 100,
+                "points": 8
+              }
+            ]
+          },
+          {
+            "key": "company",
+            "type": "text",
+            "question": "What company do you work at?",
+            "flowGroup": "qualification",
+            "showWhen": {
+              "field": "role",
+              "values": [
+                "founder",
+                "lead"
+              ]
+            }
+          },
+          {
+            "key": "email",
+            "type": "email",
+            "question": "Where should we send the results?",
+            "required": true,
+            "flowGroup": "lead_capture"
+          }
+        ],
+        "outcomes": [
+          {
+            "id": "nurture",
+            "label": "Nurture",
+            "minScore": 0
+          },
+          {
+            "id": "qualified",
+            "label": "Qualified",
+            "minScore": 12
+          }
+        ]
+      },
+      "draftConfig": null,
+      "createdAt": 1794034721183,
+      "updatedAt": 1794034721183
+    },
+    {
+      "id": "7d4ac0fe-5c38-4ab5-8bc5-541a7e215b67",
+      "accountId": "7fb477bb-8f2b-4c6b-86a6-eaee4a412ac5",
+      "name": "Kigali Student Housing Survey",
+      "slug": "kigali-housing",
+      "config": {
+        "version": 1,
+        "layout": "vertical",
+        "title": "Kigali Student Housing Survey",
+        "cover": {
+          "enabled": true,
+          "headline": "Kigali Student Housing Survey",
+          "subheadline": "<b>Help CMU students find fair housing in Kigali.</b><br>We are CMU students building the first open map of student rent prices in Kigali. Share one place you rented (or are looking for) and <b>we will send you the results</b>: a price map by neighbourhood.<br><br>⏱ About 6 minutes (about 3 minutes if you are adding another stay). New questions appear as you answer.<br>🔒 Anonymous. Landlords, agents and unit numbers are never published. Results are shown in aggregate only.",
+          "ctaText": "Start Survey"
+        },
+        "branding": {
+          "background": "#ffffff",
+          "foreground": "#1f2937",
+          "primaryColor": "#e11d48",
+          "font": "Inter",
+          "radius": "soft",
+          "progressStyle": "none",
+          "showHeader": false
+        },
+        "ending": {
+          "headline": "Thank you! 🎉",
+          "body": "Your response has been recorded. Your personal referral code is [my_code]. Share it with classmates to help map Kigali housing!"
+        },
+        "steps": [
+          {
+            "key": "consent",
+            "type": "checkbox",
+            "question": "Consent",
+            "helper": "I agree to take part. My answers can be used for this research in anonymised form.",
+            "required": true
+          },
+          {
+            "key": "first_submission",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Is this your first time answering this survey?",
+            "required": false,
+            "options": [
+              {
+                "label": "Yes, first time",
+                "value": "yes_first_time"
+              },
+              {
+                "label": "No, I am adding another place",
+                "value": "no_i_am_adding_another_place"
+              }
+            ]
+          },
+          {
+            "key": "ref_code",
+            "type": "text",
+            "question": "Do you have a referral code? (optional)",
+            "placeholder": "e.g. AAI07",
+            "helper": "A friend who already took this survey may have given you a code. Leave empty if you have none.",
+            "required": false
+          },
+          {
+            "key": "sec_about_you",
+            "type": "message",
+            "question": "About you",
+            "required": false
+          },
+          {
+            "key": "nationality_group",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Your nationality",
+            "required": false,
+            "options": [
+              {
+                "label": "Rwandan",
+                "value": "rwandan"
+              },
+              {
+                "label": "Other African",
+                "value": "other_african"
+              },
+              {
+                "label": "Non-African",
+                "value": "non_african"
+              }
+            ]
+          },
+          {
+            "key": "nationality_country",
+            "type": "text",
+            "question": "Which country? (optional)",
+            "placeholder": "e.g. Nigeria",
+            "required": false,
+            "showWhen": {
+              "field": "nationality_group",
+              "values": [
+                "other_african",
+                "non_african"
+              ]
+            }
+          },
+          {
+            "key": "intake_year",
+            "type": "dropdown",
+            "question": "Your CMU intake year",
+            "required": false,
+            "options": [
+              {
+                "label": "2020",
+                "value": "2020"
+              },
+              {
+                "label": "2021",
+                "value": "2021"
+              },
+              {
+                "label": "2022",
+                "value": "2022"
+              },
+              {
+                "label": "2023",
+                "value": "2023"
+              },
+              {
+                "label": "2024",
+                "value": "2024"
+              },
+              {
+                "label": "2025",
+                "value": "2025"
+              },
+              {
+                "label": "2026",
+                "value": "2026"
+              },
+              {
+                "label": "Not yet enrolled",
+                "value": "not_yet_enrolled"
+              }
+            ]
+          },
+          {
+            "key": "sec_the_place_you_rented",
+            "type": "message",
+            "question": "The place you rented",
+            "required": false
+          },
+          {
+            "key": "gps_location",
+            "type": "url",
+            "question": "Google Maps link of the place",
+            "placeholder": "https://maps.app.goo.gl/…",
+            "helper": "Open Google Maps, drop a pin on the building, tap Share, then Copy link.",
+            "required": false
+          },
+          {
+            "key": "neighbourhood",
+            "type": "dropdown",
+            "question": "Neighbourhood",
+            "required": false,
+            "options": [
+              {
+                "label": "Bumbogo / Kigali Innovation City",
+                "value": "bumbogo_kigali_innovation_city"
+              },
+              {
+                "label": "Gacuriro",
+                "value": "gacuriro"
+              },
+              {
+                "label": "Gikondo",
+                "value": "gikondo"
+              },
+              {
+                "label": "Gisozi",
+                "value": "gisozi"
+              },
+              {
+                "label": "Kabeza",
+                "value": "kabeza"
+              },
+              {
+                "label": "Kacyiru",
+                "value": "kacyiru"
+              },
+              {
+                "label": "Kagugu",
+                "value": "kagugu"
+              },
+              {
+                "label": "Kanombe",
+                "value": "kanombe"
+              },
+              {
+                "label": "Kibagabaga",
+                "value": "kibagabaga"
+              },
+              {
+                "label": "Kicukiro",
+                "value": "kicukiro"
+              },
+              {
+                "label": "Kimihurura",
+                "value": "kimihurura"
+              },
+              {
+                "label": "Kimironko",
+                "value": "kimironko"
+              },
+              {
+                "label": "Kinyinya",
+                "value": "kinyinya"
+              },
+              {
+                "label": "Kisimenti",
+                "value": "kisimenti"
+              },
+              {
+                "label": "Kiyovu",
+                "value": "kiyovu"
+              },
+              {
+                "label": "Nyamirambo",
+                "value": "nyamirambo"
+              },
+              {
+                "label": "Nyarutarama",
+                "value": "nyarutarama"
+              },
+              {
+                "label": "Remera",
+                "value": "remera"
+              },
+              {
+                "label": "Other",
+                "value": "other"
+              }
+            ]
+          },
+          {
+            "key": "property_type",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Type of place",
+            "required": false,
+            "options": [
+              {
+                "label": "Apartment in a named building",
+                "value": "apartment_in_a_named_building"
+              },
+              {
+                "label": "Standalone house",
+                "value": "standalone_house"
+              },
+              {
+                "label": "Room in a family compound",
+                "value": "room_in_a_family_compound"
+              }
+            ]
+          },
+          {
+            "key": "apartment_name",
+            "type": "text",
+            "question": "Building / apartment name",
+            "placeholder": "e.g. Kigali Heights",
+            "required": false,
+            "showWhen": {
+              "field": "property_type",
+              "values": [
+                "apartment_in_a_named_building"
+              ]
+            }
+          },
+          {
+            "key": "room_unit_number",
+            "type": "text",
+            "question": "Room / unit number (optional)",
+            "placeholder": "e.g. A3",
+            "helper": "Never published.",
+            "required": false,
+            "showWhen": {
+              "field": "property_type",
+              "values": [
+                "apartment_in_a_named_building"
+              ]
+            }
+          },
+          {
+            "key": "number_of_rooms",
+            "type": "slider",
+            "question": "Number of rooms (bedrooms) in the unit",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "default": 2,
+            "required": false
+          },
+          {
+            "key": "occupants",
+            "type": "slider",
+            "question": "How many people lived there, including you?",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "default": 2,
+            "required": false
+          },
+          {
+            "key": "sec_what_was_included",
+            "type": "message",
+            "question": "What was included",
+            "required": false
+          },
+          {
+            "key": "included_in_rent",
+            "type": "multiple_choice",
+            "selectionMode": "multiple",
+            "question": "What was included in the rent?",
+            "helper": "Tick all that apply. Leave empty if nothing was included.",
+            "options": [
+              {
+                "label": "Wi-Fi",
+                "value": "wi_fi"
+              },
+              {
+                "label": "Water",
+                "value": "water"
+              },
+              {
+                "label": "Electricity",
+                "value": "electricity"
+              },
+              {
+                "label": "Gas",
+                "value": "gas"
+              },
+              {
+                "label": "Garbage collection",
+                "value": "garbage_collection"
+              }
+            ]
+          },
+          {
+            "key": "furnishing",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Furnishing",
+            "required": false,
+            "options": [
+              {
+                "label": "Furnished",
+                "value": "furnished"
+              },
+              {
+                "label": "Semi-furnished",
+                "value": "semi_furnished"
+              },
+              {
+                "label": "Unfurnished",
+                "value": "unfurnished"
+              }
+            ]
+          },
+          {
+            "key": "asphalted_road",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Is the road to the place paved?",
+            "required": false,
+            "options": [
+              {
+                "label": "Yes",
+                "value": "yes"
+              },
+              {
+                "label": "No",
+                "value": "no"
+              }
+            ]
+          },
+          {
+            "key": "sec_the_deal_and_the_price",
+            "type": "message",
+            "question": "The deal and the price",
+            "required": false
+          },
+          {
+            "key": "period",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Which academic period was it for?",
+            "required": false,
+            "options": [
+              {
+                "label": "Summer",
+                "value": "summer"
+              },
+              {
+                "label": "Fall",
+                "value": "fall"
+              },
+              {
+                "label": "Spring",
+                "value": "spring"
+              }
+            ]
+          },
+          {
+            "key": "start_date",
+            "type": "date",
+            "question": "Start date of the rental",
+            "required": false
+          },
+          {
+            "key": "duration_months",
+            "type": "slider",
+            "question": "Duration of the deal (months)",
+            "min": 1,
+            "max": 10,
+            "step": 1,
+            "default": 2,
+            "required": false
+          },
+          {
+            "key": "negotiator",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Who negotiated the deal with the landlord or agent?",
+            "required": false,
+            "options": [
+              {
+                "label": "Myself alone",
+                "value": "myself_alone"
+              },
+              {
+                "label": "Myself, with a Rwandan friend or colleague",
+                "value": "myself_with_a_rwandan_friend_or_colleague"
+              },
+              {
+                "label": "A Rwandan person on my behalf",
+                "value": "a_rwandan_person_on_my_behalf"
+              },
+              {
+                "label": "A non-Rwandan friend or group",
+                "value": "a_non_rwandan_friend_or_group"
+              }
+            ]
+          },
+          {
+            "key": "agent_involved",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "Was an agent involved?",
+            "required": false,
+            "options": [
+              {
+                "label": "Yes",
+                "value": "yes"
+              },
+              {
+                "label": "No",
+                "value": "no"
+              }
+            ]
+          },
+          {
+            "key": "commission_fee_rwf",
+            "type": "slider",
+            "question": "Commission paid to the agent (RWF)",
+            "min": 10000,
+            "max": 2000000,
+            "step": 10000,
+            "default": 200000,
+            "required": false,
+            "showWhen": {
+              "field": "agent_involved",
+              "values": [
+                "yes"
+              ]
+            }
+          },
+          {
+            "key": "asking_price_rwf",
+            "type": "slider",
+            "question": "First price quoted to you, per month (RWF, optional)",
+            "helper": "Helps us understand how much prices change in negotiation.",
+            "min": 10000,
+            "max": 2000000,
+            "step": 10000,
+            "default": 200000,
+            "required": false
+          },
+          {
+            "key": "rent_price_rwf",
+            "type": "slider",
+            "question": "Rent you finally paid, per month (RWF)",
+            "helper": "Rent only; do not include the agent commission.",
+            "min": 10000,
+            "max": 2000000,
+            "step": 10000,
+            "default": 200000,
+            "required": false
+          },
+          {
+            "key": "sec_about_this_kind_of_survey",
+            "type": "message",
+            "question": "About this kind of survey",
+            "required": false
+          },
+          {
+            "key": "heard_via",
+            "type": "multiple_choice",
+            "selectionMode": "single",
+            "question": "How did you hear about this survey?",
+            "helper": "Last section: your answers here help us improve how we collect data in Kigali.",
+            "required": false,
+            "options": [
+              {
+                "label": "Someone asked me in person",
+                "value": "someone_asked_me_in_person"
+              },
+              {
+                "label": "WhatsApp",
+                "value": "whatsapp"
+              },
+              {
+                "label": "Email",
+                "value": "email"
+              },
+              {
+                "label": "Social media",
+                "value": "social_media"
+              },
+              {
+                "label": "A classmate or friend",
+                "value": "a_classmate_or_friend"
+              },
+              {
+                "label": "Other",
+                "value": "other"
+              }
+            ]
+          },
+          {
+            "key": "motivators",
+            "type": "multiple_choice",
+            "selectionMode": "multiple",
+            "question": "What made you take part?",
+            "options": [
+              {
+                "label": "I want the results",
+                "value": "i_want_the_results"
+              },
+              {
+                "label": "Someone asked me in person",
+                "value": "someone_asked_me_in_person"
+              },
+              {
+                "label": "It is short",
+                "value": "it_is_short"
+              },
+              {
+                "label": "I was affected by housing problems",
+                "value": "i_was_affected_by_housing_problems"
+              },
+              {
+                "label": "I had free time now",
+                "value": "i_had_free_time_now"
+              },
+              {
+                "label": "A reward (airtime, snacks)",
+                "value": "a_reward_airtime_snacks"
+              },
+              {
+                "label": "The video",
+                "value": "the_video"
+              },
+              {
+                "label": "Other",
+                "value": "other"
+              }
+            ]
+          },
+          {
+            "key": "sec_your_referral_code",
+            "type": "message",
+            "question": "Your referral code",
+            "required": false
+          },
+          {
+            "key": "my_code",
+            "type": "text",
+            "question": "Your personal referral code",
+            "helper": "Your unique referral code is auto-generated below. Share it with classmates to help map Kigali housing!",
+            "required": false
+          }
+        ]
+      },
+      "draftConfig": null,
+      "createdAt": 1794037653237,
+      "updatedAt": 1794042831065
+    }
+  ]
+}

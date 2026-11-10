@@ -10,6 +10,7 @@
  */
 import type { FormConfig } from '@quill/engine';
 import type { SubmissionsPage, AnalyticsResponse } from '@quill/types';
+import seedData from './seed-data.json';
 import type {
   AccountEntity,
   AnalyticsSummary,
@@ -31,27 +32,47 @@ export class FirestoreDataStore implements DataStore {
   private async getFirestore(): Promise<any> {
     if (this.firestore) return this.firestore;
 
-    // Type-safe dynamic import of firebase-admin
-    const admin = await (Function('return import("firebase-admin")')() as Promise<any>);
-    const appModule = admin.default || admin;
+    const { initializeApp, cert, getApps } = await import('firebase-admin/app');
+    const { getFirestore } = await import('firebase-admin/firestore');
 
-    if (!appModule.apps || !appModule.apps.length) {
+    if (!getApps().length) {
       const projectId = process.env.FIREBASE_PROJECT_ID;
       const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-      const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+      const rawKey = process.env.FIREBASE_PRIVATE_KEY;
+      const privateKey = rawKey ? rawKey.replace(/\\n/g, '\n').replace(/^"|"$/g, '') : undefined;
 
       if (clientEmail && privateKey) {
-        appModule.initializeApp({
-          credential: appModule.credential.cert({ projectId, clientEmail, privateKey }),
+        initializeApp({
+          credential: cert({ projectId, clientEmail, privateKey }),
           projectId,
         });
-      } else {
-        appModule.initializeApp({ projectId });
+      } else if (projectId) {
+        initializeApp({ projectId });
       }
     }
 
-    this.firestore = appModule.firestore();
+    this.firestore = getFirestore();
+    await this.ensureSeedData(this.firestore);
     return this.firestore;
+  }
+
+  private async ensureSeedData(fs: any): Promise<void> {
+    try {
+      const acmeSnap = await fs.collection('accounts').where('code', '==', 'acme').limit(1).get();
+      if (!acmeSnap.empty) return;
+
+      const batch = fs.batch();
+      batch.set(fs.collection('accounts').doc(seedData.account.id), seedData.account);
+      for (const m of seedData.members) {
+        batch.set(fs.collection('members').doc(m.id), m);
+      }
+      for (const f of seedData.forms) {
+        batch.set(fs.collection('forms').doc(f.id), f);
+      }
+      await batch.commit();
+    } catch (err) {
+      console.warn('ensureSeedData notice:', err);
+    }
   }
 
   async getAccountByCode(code: string): Promise<AccountEntity | null> {

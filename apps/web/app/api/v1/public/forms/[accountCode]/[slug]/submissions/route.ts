@@ -16,7 +16,13 @@ export async function POST(
     return NextResponse.json({ error: 'BAD_REQUEST', message: 'Invalid JSON body.' }, { status: 400 });
   }
 
-  const result = await submissionService.submit(accountCode, slug, body);
+  let result: any;
+  try {
+    result = await submissionService.submit(accountCode, slug, body);
+  } catch (err: any) {
+    return NextResponse.json({ error: 'SERVER_ERROR', message: String(err?.message || err) }, { status: 500 });
+  }
+
   if (!result.ok) {
     const status = result.error === 'NOT_FOUND' ? 404 : 400;
     return NextResponse.json(result, { status });
