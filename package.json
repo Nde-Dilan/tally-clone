@@ -28,14 +28,14 @@
     "qa": "playwright test -c qa/playwright.config.ts"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.10",
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
-    "@playwright/test": "^1.61.1",
-    "cross-env": "^7.0.3",
-    "prettier": "^3.4.2",
-    "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "@changesets/cli": "^3.0.3",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@playwright/test": "^1.65.0",
+    "cross-env": "^10.1.0",
+    "prettier": "^3.9.10",
+    "turbo": "^2.11.10",
+    "typescript": "^7.0.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
