@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cloud Firestore is accessed exclusively by Next.js Serverless via Firebase Admin SDK.
+    // Client-side direct access is disallowed for security.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
