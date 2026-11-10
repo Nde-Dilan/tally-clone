@@ -29,6 +29,8 @@ out/
 *.key
 *.crt
 *.p12
+*-firebase-adminsdk-*.json
+*.json.key
 
 # Internal deploy overlay — private, never in the public repo
 /deploy/
