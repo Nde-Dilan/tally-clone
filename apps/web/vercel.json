@@ -1,10 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd ../.. && turbo run build --filter=@quill/web...",
-  "crons": [
-    {
-      "path": "/api/cron/outbox",
-      "schedule": "* * * * *"
-    }
-  ]
+  "buildCommand": "cd ../.. && turbo run build --filter=@quill/web..."
 }
