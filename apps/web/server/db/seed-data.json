@@ -527,7 +527,8 @@
           },
           {
             "key": "start_date",
-            "type": "date",
+            "type": "text",
+            "placeholder": "YYYY-MM-DD",
             "question": "Start date of the rental",
             "required": false
           },

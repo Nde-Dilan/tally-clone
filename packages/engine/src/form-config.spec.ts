@@ -180,6 +180,16 @@ describe('normalizeConfig', () => {
     expect(once.scoring).toEqual({ enabled: false });
     expect(normalizeConfig(once)).toEqual(once);
   });
+
+  it('sanitizes legacy date step type to text with date placeholder', () => {
+    const config = {
+      version: 1,
+      steps: [{ key: 'start_date', type: 'date', question: 'Start date' } as any],
+    } as FormConfig;
+    const out = normalizeConfig(config);
+    expect(out.steps[0]?.type).toBe('text');
+    expect(out.steps[0]?.placeholder).toBe('YYYY-MM-DD');
+  });
 });
 
 describe('interpolate', () => {

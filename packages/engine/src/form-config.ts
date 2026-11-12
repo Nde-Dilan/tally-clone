@@ -617,9 +617,13 @@ export function normalizeConfig(config: FormConfig): FormConfig {
   const remap = (field: string): string => rename.get(field) ?? field;
 
   const normalized = steps.map((step) => {
+    const rawType = (step.type as string) === 'date' ? 'text' : step.type;
+    const rawPlaceholder = (step.type as string) === 'date' ? (step.placeholder || 'YYYY-MM-DD') : step.placeholder;
     const next: FormStep = {
       ...step,
-      flowGroup: step.flowGroup ?? defaultFlowGroup(step.type),
+      type: rawType,
+      placeholder: rawPlaceholder,
+      flowGroup: step.flowGroup ?? defaultFlowGroup(rawType),
     };
     if (step.options) next.options = normalizeOptions(step.options);
     if (step.showWhen) next.showWhen = { ...step.showWhen, field: remap(step.showWhen.field) };

@@ -53,7 +53,7 @@ function averageSeconds(durationsMs: number[]): number | null {
 
 const MAX_TREND_DAYS = 366;
 
-function buildTrends(input: {
+export function buildTrends(input: {
   range: DateRange;
   zone: string;
   dailyViews: { day: number; n: number }[];

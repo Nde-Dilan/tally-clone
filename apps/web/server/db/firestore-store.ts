@@ -8,8 +8,11 @@
  * - FIREBASE_PRIVATE_KEY (optional)
  * - FIREBASE_DATABASE_ID (optional, defaults to '(default)')
  */
-import type { FormConfig } from '@quill/engine';
-import type { SubmissionsPage, AnalyticsResponse } from '@quill/types';
+import type { CompletedSubmission } from '@quill/db';
+import { resolveFormLayout, stepQuestionText, type FormConfig } from '@quill/engine';
+import { localDayIndex, resolveTimeZone } from '@quill/shared';
+import type { SubmissionsPage, AnalyticsResponse, DropoffRow } from '@quill/types';
+import { buildTrends } from '../services/analytics-computation';
 import seedData from './seed-data.json';
 import type {
   AccountEntity,
@@ -450,73 +453,135 @@ export class FirestoreDataStore implements DataStore {
     const form = await this.getFormById(accountId, formId);
     const config = (form?.config ?? { version: 1, steps: [] }) as FormConfig;
     const steps = config.steps ?? [];
+    const zone = resolveTimeZone(range?.tz);
+    const dropoffMode = resolveFormLayout(config) === 'vertical' ? 'answered' : 'viewed';
 
     const [eventsSnap, submissionsSnap] = await Promise.all([
       fs.collection('form_events').where('formId', '==', formId).get(),
-      fs.collection('submissions').where('formId', '==', formId).where('partial', '==', false).get(),
+      fs.collection('submissions').where('formId', '==', formId).get(),
     ]);
+
+    const inRange = (ts?: number | null) => {
+      if (ts == null) return false;
+      if (range?.from != null && ts < range.from) return false;
+      if (range?.to != null && ts > range.to) return false;
+      return true;
+    };
 
     const viewSessions = new Set<string>();
     const startSessions = new Set<string>();
     const stepCounts: Record<string, number> = {};
     const trafficMap = new Map<string, { views: number; submissions: number }>();
 
+    const dailyViewsMap = new Map<number, Set<string>>();
+    const dailyStartsMap = new Map<number, Set<string>>();
+
     eventsSnap.docs.forEach((doc: any) => {
       const d = doc.data();
-      if (d.type === 'view') viewSessions.add(d.sessionId);
-      if (d.type === 'start') startSessions.add(d.sessionId);
-      if (d.type === 'step_view' && d.stepKey) {
-        stepCounts[d.stepKey] = (stepCounts[d.stepKey] || 0) + 1;
+      const ts = d.createdAt;
+      if (!inRange(ts)) return;
+
+      const day = localDayIndex(ts, zone);
+
+      if (d.type === 'view') {
+        viewSessions.add(d.sessionId);
+        if (!dailyViewsMap.has(day)) dailyViewsMap.set(day, new Set());
+        dailyViewsMap.get(day)!.add(d.sessionId);
+      }
+      if (d.type === 'start' || d.type === 'step_complete') {
+        startSessions.add(d.sessionId);
+        if (!dailyStartsMap.has(day)) dailyStartsMap.set(day, new Set());
+        dailyStartsMap.get(day)!.add(d.sessionId);
+      }
+      if (dropoffMode === 'answered') {
+        if (d.type === 'step_complete' && d.stepKey) {
+          stepCounts[d.stepKey] = (stepCounts[d.stepKey] || 0) + 1;
+        }
+      } else {
+        if (d.type === 'step_view' && d.stepKey) {
+          stepCounts[d.stepKey] = (stepCounts[d.stepKey] || 0) + 1;
+        }
       }
     });
 
     const views = viewSessions.size;
     const starts = startSessions.size;
-    const submissions = submissionsSnap.docs.length;
-    const completionRate = starts > 0 ? Math.min(100, Math.round((submissions / starts) * 1000) / 10) : null;
 
+    let submissions = 0;
+    let partialSubmits = 0;
     const durations: number[] = [];
+    const completedForTrends: CompletedSubmission[] = [];
+
     submissionsSnap.docs.forEach((doc: any) => {
       const d = doc.data();
-      if (d.createdAt && d.updatedAt && d.updatedAt > d.createdAt) {
-        durations.push(d.updatedAt - d.createdAt);
-      }
-      if (d.visit && d.visit.source) {
-        const key = `${d.visit.source}|${d.visit.medium || ''}|${d.visit.campaign || ''}`;
-        const cur = trafficMap.get(key) || { views: 1, submissions: 0 };
-        cur.submissions += 1;
-        trafficMap.set(key, cur);
+      const ts = d.updatedAt ?? d.createdAt;
+      if (!inRange(ts)) return;
+
+      if (d.partial) {
+        partialSubmits += 1;
+      } else {
+        submissions += 1;
+        const day = localDayIndex(ts, zone);
+        let dur: number | null = null;
+        if (d.createdAt && d.updatedAt && d.updatedAt > d.createdAt) {
+          dur = d.updatedAt - d.createdAt;
+          durations.push(dur);
+        }
+        completedForTrends.push({ day, durationMs: dur });
+
+        const utm = (d.data?.utm as Record<string, string> | undefined) ?? {};
+        const source = utm.utm_source || d.visit?.source || null;
+        const medium = utm.utm_medium || d.visit?.medium || null;
+        const campaign = utm.utm_campaign || d.visit?.campaign || null;
+        if (source) {
+          const key = `${source}|${medium || ''}|${campaign || ''}`;
+          const cur = trafficMap.get(key) || { views: 1, submissions: 0 };
+          cur.submissions += 1;
+          trafficMap.set(key, cur);
+        }
       }
     });
 
+    const completionRate = starts > 0 ? Math.min(100, Math.round((submissions / starts) * 1000) / 10) : null;
     const medianTime = durations.length > 0 ? Math.round(durations.sort((a, b) => a - b)[Math.floor(durations.length / 2)]! / 1000) : null;
     const avgTime = durations.length > 0 ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length / 1000) : null;
 
-    const dropoff = [
-      {
-        stepIndex: -1,
-        key: null,
-        question: config.cover?.headline || 'Cover',
-        isCover: true,
-        views,
-        dropoff: Math.max(0, views - starts),
-        dropoffPercent: views > 0 ? Math.round((Math.max(0, views - starts) / views) * 1000) / 10 : 0,
-      },
-      ...steps.map((s, i) => {
-        const stepViews = stepCounts[s.key] ?? 0;
-        const nextViews = i < steps.length - 1 ? (stepCounts[steps[i + 1]!.key] ?? 0) : submissions;
-        const drop = Math.max(0, stepViews - nextViews);
-        return {
-          stepIndex: i,
-          key: s.key,
-          question: (s as any).question || (s as any).title || s.key,
-          isCover: false,
-          views: stepViews,
-          dropoff: drop,
-          dropoffPercent: stepViews > 0 ? Math.round((drop / stepViews) * 1000) / 10 : 0,
-        };
-      }),
-    ];
+    const rowViews: number[] = [views];
+    for (let i = 0; i < steps.length; i++) {
+      rowViews.push(stepCounts[steps[i]!.key] ?? 0);
+    }
+
+    const dropoff: DropoffRow[] = [];
+    const coverViews = rowViews[0] ?? 0;
+    const coverDrop = Math.max(0, coverViews - (rowViews[1] ?? 0));
+    dropoff.push({
+      stepIndex: -1,
+      key: null,
+      question:
+        config.cover && config.cover.enabled !== false
+          ? config.cover.headline?.trim() || config.cover.eyebrow?.trim() || 'Cover'
+          : '',
+      isCover: true,
+      views: coverViews,
+      dropoff: coverDrop,
+      dropoffPercent: coverViews > 0 ? Math.round((coverDrop / coverViews) * 1000) / 10 : 0,
+    });
+
+    for (let i = 0; i < steps.length; i++) {
+      const step = steps[i]!;
+      const stepView = rowViews[i + 1] ?? 0;
+      const nextView = i < steps.length - 1 ? (rowViews[i + 2] ?? 0) : submissions;
+      const drop = Math.max(0, stepView - nextView);
+      dropoff.push({
+        stepIndex: i,
+        key: step.key,
+        question: stepQuestionText(step) || (step as any).question || step.key,
+        isCover: false,
+        views: stepView,
+        dropoff: drop,
+        dropoffPercent: stepView > 0 ? Math.round((drop / stepView) * 1000) / 10 : 0,
+      });
+    }
 
     const trafficSources = Array.from(trafficMap.entries()).map(([k, v]) => {
       const [source, medium, campaign] = k.split('|');
@@ -530,6 +595,16 @@ export class FirestoreDataStore implements DataStore {
       };
     });
 
+    const dailyViews = Array.from(dailyViewsMap.entries()).map(([day, sessions]) => ({ day, n: sessions.size }));
+    const dailyStarts = Array.from(dailyStartsMap.entries()).map(([day, sessions]) => ({ day, n: sessions.size }));
+    const trends = buildTrends({
+      range: { from: range?.from, to: range?.to },
+      zone,
+      dailyViews,
+      dailyStarts,
+      completed: completedForTrends,
+    });
+
     return {
       views,
       starts,
@@ -538,13 +613,13 @@ export class FirestoreDataStore implements DataStore {
       timeToComplete: medianTime,
       medianTimeToComplete: medianTime,
       avgTimeToComplete: avgTime,
-      partialSubmits: 0,
+      partialSubmits,
       bookings: 0,
-      dropoffMode: 'answered',
+      dropoffMode,
       dropoff,
-      trends: [],
+      trends,
       trafficSources,
-      range: { from: range?.from ?? null, to: range?.to ?? null, timeZone: range?.tz ?? 'UTC' },
+      range: { from: range?.from ?? null, to: range?.to ?? null, timeZone: zone },
     };
   }
 
