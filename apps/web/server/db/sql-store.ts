@@ -22,11 +22,19 @@ import {
   completedSubmissions,
   querySubmissions,
   enqueueOutbox,
+  listFolders,
+  createFolder,
+  renameFolder,
+  deleteFolder,
+  setFormFolder,
+  deleteSubmissionForAccount,
+  deleteSubmissionsForAccount,
   type Db,
 } from '@quill/db';
 import type {
   AccountEntity,
   DataStore,
+  FolderEntity,
   FormEntity,
   MemberEntity,
   OutboxEntity,
@@ -35,6 +43,7 @@ import type {
   ListSubmissionsOptions,
   AnalyticsSummary,
   FormEventEntity,
+  SubmissionEntity,
 } from './types';
 import type { FormConfig } from '@quill/engine';
 import type { SubmissionsPage, AnalyticsResponse } from '@quill/types';
@@ -378,6 +387,97 @@ export class SqlDataStore implements DataStore {
       status: opts.partial ? 'all' : 'completed',
     });
     return res as unknown as SubmissionsPage;
+  }
+
+  async getSubmission(
+    _accountId: string,
+    formId: string,
+    submissionId: string,
+  ): Promise<SubmissionEntity | null> {
+    const db = await this.db();
+    const row = await db.get<Record<string, unknown>>(
+      sql`SELECT id, form_id, session_id, data, score, partial, visit, created_at, updated_at
+          FROM submission WHERE id = ${submissionId} AND form_id = ${formId} LIMIT 1`,
+    );
+    if (!row) return null;
+    return {
+      id: String(row.id),
+      formId: String(row.form_id),
+      sessionId: String(row.session_id),
+      data: typeof row.data === 'string' ? JSON.parse(row.data) : (row.data as any),
+      score: Number(row.score ?? 0),
+      partial: Boolean(row.partial),
+      visit: typeof row.visit === 'string' ? JSON.parse(row.visit) : (row.visit as any),
+      createdAt: Number(row.created_at ?? 0),
+      updatedAt: Number(row.updated_at ?? 0),
+    };
+  }
+
+  async deleteSubmission(accountId: string, submissionId: string): Promise<boolean> {
+    const db = await this.db();
+    const res = await deleteSubmissionForAccount(db, accountId, submissionId);
+    return res === 'deleted' || res === 'absent';
+  }
+
+  async deleteSubmissions(accountId: string, formId: string, ids: string[]): Promise<number> {
+    const db = await this.db();
+    const res = await deleteSubmissionsForAccount(db, accountId, formId, ids);
+    return res.deleted;
+  }
+
+  async listFolders(accountId: string): Promise<FolderEntity[]> {
+    const db = await this.db();
+    const rows = await listFolders(db, accountId);
+    return rows.map((r: any) => ({
+      id: r.id,
+      accountId: r.accountId,
+      name: r.name,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    }));
+  }
+
+  async createFolder(accountId: string, name: string): Promise<FolderEntity> {
+    const db = await this.db();
+    const res = await createFolder(db, accountId, name);
+    if (!res.ok) throw new Error(`Create folder failed: ${res.reason}`);
+    const r = res.value;
+    return {
+      id: r.id,
+      accountId: r.accountId,
+      name: r.name,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    };
+  }
+
+  async renameFolder(accountId: string, folderId: string, name: string): Promise<FolderEntity> {
+    const db = await this.db();
+    const res = await renameFolder(db, accountId, folderId, name);
+    if (!res.ok) throw new Error(`Rename folder failed: ${res.reason}`);
+    const r = res.value;
+    return {
+      id: r.id,
+      accountId: r.accountId,
+      name: r.name,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    };
+  }
+
+  async deleteFolder(accountId: string, folderId: string): Promise<boolean> {
+    const db = await this.db();
+    await deleteFolder(db, accountId, folderId);
+    return true;
+  }
+
+  async setFormFolder(accountId: string, formId: string, folderId: string | null): Promise<FormEntity> {
+    const db = await this.db();
+    const res = await setFormFolder(db, accountId, formId, folderId);
+    if (!res.ok) throw new Error(`Set form folder failed: ${res.reason}`);
+    const form = await this.getFormById(accountId, formId);
+    if (!form) throw new Error('Form not found');
+    return form;
   }
 
   async recordFormEvent(event: Omit<FormEventEntity, 'id' | 'createdAt'>): Promise<void> {

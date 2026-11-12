@@ -15,6 +15,7 @@ import type {
   AccountEntity,
   AnalyticsSummary,
   DataStore,
+  FolderEntity,
   FormEntity,
   FormEventEntity,
   ListSubmissionsOptions,
@@ -319,36 +320,114 @@ export class FirestoreDataStore implements DataStore {
     opts: ListSubmissionsOptions = {},
   ): Promise<SubmissionsPage> {
     const fs = await this.getFirestore();
-    let query = fs.collection('submissions').where('formId', '==', formId);
-
-    if (!opts.partial) {
-      query = query.where('partial', '==', false);
-    }
-
-    const limit = opts.limit ?? 25;
-    const snap = await query.orderBy('createdAt', opts.sort ?? 'desc').limit(limit).get();
-    const items = snap.docs.map((doc: any) => {
+    const snap = await fs.collection('submissions').where('formId', '==', formId).get();
+    let all = snap.docs.map((doc: any) => {
       const d = doc.data();
       return {
         id: doc.id,
         formId,
         sessionId: d.sessionId,
         data: d.data as any,
-        score: d.score,
-        startedAt: d.createdAt,
-        completedAt: d.partial ? null : d.updatedAt,
-        partialAt: d.partial ? d.updatedAt : null,
+        score: d.score ?? 0,
+        startedAt: d.createdAt ?? 0,
+        completedAt: d.partial ? null : (d.updatedAt ?? d.createdAt ?? null),
+        partialAt: d.partial ? (d.updatedAt ?? d.createdAt ?? null) : null,
         durationSeconds: 0,
         visit: d.visit ?? null,
+        partial: Boolean(d.partial),
       };
     });
 
+    if (opts.partial !== undefined) {
+      all = all.filter((s: any) => s.partial === opts.partial);
+    }
+
+    all.sort((a: any, b: any) =>
+      opts.sort === 'asc' ? a.startedAt - b.startedAt : b.startedAt - a.startedAt,
+    );
+
+    const total = all.length;
+    const offset = opts.offset ?? 0;
+    const limit = opts.limit ?? 25;
+    const items = all.slice(offset, offset + limit).map(({ partial, ...s }: any) => s);
+
     return {
       items,
-      total: snap.docs.length,
+      total,
       limit,
-      offset: opts.offset ?? 0,
+      offset,
     };
+  }
+
+  async getSubmission(
+    _accountId: string,
+    formId: string,
+    submissionId: string,
+  ): Promise<SubmissionEntity | null> {
+    const fs = await this.getFirestore();
+    const doc = await fs.collection('submissions').doc(submissionId).get();
+    if (!doc.exists) return null;
+    const data = doc.data();
+    if (data.formId !== formId) return null;
+    return { id: doc.id, ...data } as SubmissionEntity;
+  }
+
+  async deleteSubmission(_accountId: string, submissionId: string): Promise<boolean> {
+    const fs = await this.getFirestore();
+    await fs.collection('submissions').doc(submissionId).delete();
+    return true;
+  }
+
+  async deleteSubmissions(_accountId: string, _formId: string, ids: string[]): Promise<number> {
+    const fs = await this.getFirestore();
+    const batch = fs.batch();
+    for (const id of ids) {
+      batch.delete(fs.collection('submissions').doc(id));
+    }
+    await batch.commit();
+    return ids.length;
+  }
+
+  async listFolders(accountId: string): Promise<FolderEntity[]> {
+    const fs = await this.getFirestore();
+    const snap = await fs.collection('folders').where('accountId', '==', accountId).get();
+    const folders = snap.docs.map((d: any) => ({ id: d.id, ...d.data() } as FolderEntity));
+    return folders.sort((a: FolderEntity, b: FolderEntity) => a.name.localeCompare(b.name));
+  }
+
+  async createFolder(accountId: string, name: string): Promise<FolderEntity> {
+    const fs = await this.getFirestore();
+    const id = crypto.randomUUID();
+    const now = Date.now();
+    const folder: FolderEntity = {
+      id,
+      accountId,
+      name,
+      createdAt: now,
+      updatedAt: now,
+    };
+    await fs.collection('folders').doc(id).set(folder);
+    return folder;
+  }
+
+  async renameFolder(accountId: string, id: string, name: string): Promise<FolderEntity> {
+    const fs = await this.getFirestore();
+    const docRef = fs.collection('folders').doc(id);
+    const doc = await docRef.get();
+    if (!doc.exists) throw new Error('Folder not found');
+    const now = Date.now();
+    await docRef.update({ name, updatedAt: now });
+    return { id, accountId, name, createdAt: doc.data().createdAt, updatedAt: now };
+  }
+
+  async deleteFolder(_accountId: string, id: string): Promise<boolean> {
+    const fs = await this.getFirestore();
+    await fs.collection('folders').doc(id).delete();
+    return true;
+  }
+
+  async setFormFolder(accountId: string, formId: string, folderId: string | null): Promise<FormEntity> {
+    return this.updateForm(accountId, formId, { folderId });
   }
 
   async recordFormEvent(event: Omit<FormEventEntity, 'id' | 'createdAt'>): Promise<void> {

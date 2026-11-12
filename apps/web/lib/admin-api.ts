@@ -54,64 +54,223 @@ async function req<T>(method: string, path: string, body?: unknown, opts: ReqOpt
     const { adminService } = await import('@/server/services/admin.service');
 
     const principal = await resolveHostPrincipal();
+    const cleanPath = (path || '').split('?')[0] || '';
+    const queryStr = path.includes('?') ? path.split('?')[1] : '';
+    const sp = new URLSearchParams(queryStr);
+    const parts = cleanPath.split('/');
+    const p3 = parts[3] || '';
+    const p4 = parts[4] || '';
+    const p5 = parts[5] || '';
+    const p6 = parts[6] || '';
 
-    if (method === 'GET' && path === '/v1/me') {
+    // Identity & Account
+    if (method === 'GET' && cleanPath === '/v1/me') {
       return (await adminService.me(principal)) as unknown as T;
     }
-    if (method === 'GET' && path === '/v1/forms') {
+    if (method === 'GET' && cleanPath === '/v1/vanity') {
+      return (await adminService.vanityStatus(principal.accountId)) as unknown as T;
+    }
+    if (method === 'GET' && (cleanPath === '/v1/workspaces' || cleanPath === '/v1/account/workspaces')) {
+      return (await adminService.listWorkspaces(principal)) as unknown as T;
+    }
+    if (method === 'GET' && cleanPath === '/v1/me/profile') {
+      return { handle: null, profile: null } as unknown as T;
+    }
+    if (method === 'PUT' && cleanPath === '/v1/me/profile') {
+      return { ok: true } as unknown as T;
+    }
+    if (method === 'PUT' && cleanPath === '/v1/me/locale') {
+      return { ok: true, locale: (body as any)?.locale ?? 'en' } as unknown as T;
+    }
+    if (method === 'PATCH' && cleanPath === '/v1/account/onboarding') {
+      return { saved: true, onboarding: null } as unknown as T;
+    }
+    if (method === 'POST' && cleanPath === '/v1/account/onboarding/complete') {
+      return { completed: true, formId: null } as unknown as T;
+    }
+
+    // Folders
+    if (method === 'GET' && cleanPath === '/v1/folders') {
+      return (await adminService.listFolders(principal.accountId)) as unknown as T;
+    }
+    if (method === 'POST' && cleanPath === '/v1/folders') {
+      return (await adminService.createFolder(principal.accountId, (body as any)?.name ?? 'Folder')) as unknown as T;
+    }
+    if (method === 'PATCH' && cleanPath.startsWith('/v1/folders/') && p3) {
+      return (await adminService.renameFolder(principal.accountId, p3, (body as any)?.name ?? '')) as unknown as T;
+    }
+    if (method === 'DELETE' && cleanPath.startsWith('/v1/folders/') && p3) {
+      return (await adminService.deleteFolder(principal.accountId, p3)) as unknown as T;
+    }
+
+    // Forms Collection
+    if (method === 'GET' && cleanPath === '/v1/forms') {
       return (await adminService.listForms(principal.accountId)) as unknown as T;
     }
-    if (method === 'GET' && path.startsWith('/v1/forms/')) {
-      const cleanPath = (path || '').split('?')[0] || '';
-      const parts = cleanPath.split('/');
-      const p3 = parts[3] || '';
-      const p4 = parts[4] || '';
+    if (method === 'POST' && cleanPath === '/v1/forms') {
+      return (await adminService.createForm(principal.accountId, body as any)) as unknown as T;
+    }
+
+    // Form-scoped routes (/v1/forms/:id/...)
+    if (cleanPath.startsWith('/v1/forms/') && p3) {
       // /v1/forms/:id/analytics
-      if (p4 === 'analytics') {
-        const queryStr = path.includes('?') ? path.split('?')[1] : '';
-        const sp = new URLSearchParams(queryStr);
+      if (method === 'GET' && p4 === 'analytics') {
         const from = sp.get('from') ? Number(sp.get('from')) : undefined;
         const to = sp.get('to') ? Number(sp.get('to')) : undefined;
         const tz = sp.get('tz') ?? undefined;
         return (await adminService.getAnalytics(principal.accountId, p3, { from, to, tz })) as unknown as T;
       }
+
+      // /v1/forms/:id/submissions-facets
+      if (method === 'GET' && p4 === 'submissions-facets') {
+        return (await adminService.getSubmissionFacets(principal.accountId, p3)) as unknown as T;
+      }
+
       // /v1/forms/:id/submissions
       if (p4 === 'submissions') {
-        return (await adminService.listSubmissions(principal.accountId, p3)) as unknown as T;
+        if (method === 'POST' && p5 === 'bulk-delete') {
+          return (await adminService.deleteSubmissions(principal.accountId, p3, (body as any)?.ids ?? [])) as unknown as T;
+        }
+        if (method === 'GET' && p5) {
+          const sub = await adminService.getSubmission(principal.accountId, p3, decodeURIComponent(p5));
+          if (!sub) throw new ApiError(404, 'Submission not found');
+          return sub as unknown as T;
+        }
+        if (method === 'GET') {
+          const limit = sp.get('limit') ? Number(sp.get('limit')) : 25;
+          const offset = sp.get('offset') ? Number(sp.get('offset')) : 0;
+          const sort = (sp.get('sort') as any) || 'desc';
+          const status = sp.get('status');
+          const partial = status === 'partial' ? true : status === 'completed' ? false : undefined;
+          return (await adminService.listSubmissions(principal.accountId, p3, { limit, offset, sort, partial })) as unknown as T;
+        }
       }
-      // /v1/forms/:id
-      if (parts.length === 4 && p3) {
+
+      // /v1/forms/:id/summary
+      if (method === 'GET' && p4 === 'summary') {
+        if (p5 && p6 === 'answers') {
+          return (await adminService.searchSummaryAnswers(principal.accountId, p3, decodeURIComponent(p5), {
+            q: sp.get('q') ?? undefined,
+            limit: sp.get('limit') ? Number(sp.get('limit')) : 25,
+            offset: sp.get('offset') ? Number(sp.get('offset')) : 0,
+          })) as unknown as T;
+        }
+        return (await adminService.getSubmissionsSummary(principal.accountId, p3)) as unknown as T;
+      }
+
+      // /v1/forms/:id/notifications
+      if (p4 === 'notifications') {
+        if (method === 'GET') return (await adminService.getFormNotifications(principal.accountId, p3)) as unknown as T;
+        return { settings: [] } as unknown as T;
+      }
+
+      // /v1/forms/:id/folder
+      if (method === 'PATCH' && p4 === 'folder') {
+        return (await adminService.setFormFolder(principal.accountId, p3, (body as any)?.folderId ?? null)) as unknown as T;
+      }
+
+      // /v1/forms/:id/publish
+      if (method === 'POST' && p4 === 'publish') {
+        return (await adminService.publishForm(principal.accountId, p3)) as unknown as T;
+      }
+
+      // /v1/forms/:id/duplicate
+      if (method === 'POST' && p4 === 'duplicate') {
+        return (await adminService.duplicateForm(principal.accountId, p3)) as unknown as T;
+      }
+
+      // /v1/forms/:id/revert
+      if (method === 'POST' && p4 === 'revert') {
         const form = await adminService.getForm(principal.accountId, p3);
-        if (form) return form as unknown as T;
+        if (!form) throw new ApiError(404, 'Form not found');
+        return form as unknown as T;
+      }
+
+      // /v1/forms/:id/slug
+      if (method === 'PUT' && p4 === 'slug') {
+        return (await adminService.updateForm(principal.accountId, p3, { slug: (body as any)?.slug })) as unknown as T;
+      }
+
+      // /v1/forms/:id/destinations
+      if (method === 'PUT' && p4 === 'destinations') {
+        return (await adminService.updateForm(principal.accountId, p3, { destinations: (body as any)?.destinations })) as unknown as T;
+      }
+
+      // /v1/forms/:id (exact)
+      if (parts.length === 4) {
+        if (method === 'GET') {
+          const form = await adminService.getForm(principal.accountId, p3);
+          if (!form) throw new ApiError(404, 'Form not found');
+          return form as unknown as T;
+        }
+        if (method === 'PUT') {
+          return (await adminService.updateForm(principal.accountId, p3, body as any)) as unknown as T;
+        }
+        if (method === 'DELETE') {
+          return (await adminService.deleteForm(principal.accountId, p3)) as unknown as T;
+        }
       }
     }
-    if (method === 'POST' && path === '/v1/forms') {
-      return (await adminService.createForm(principal.accountId, body as any)) as unknown as T;
+
+    // Submissions root routes
+    if (method === 'DELETE' && cleanPath.startsWith('/v1/submissions/') && p3) {
+      return (await adminService.deleteSubmission(principal.accountId, p3)) as unknown as T;
     }
-    if (method === 'PUT' && path.startsWith('/v1/forms/') && path.split('/').length === 4) {
-      const parts = path.split('/');
-      const p3 = parts[3] || '';
-      return (await adminService.updateForm(principal.accountId, p3, body as any)) as unknown as T;
+
+    // Branding
+    if (cleanPath === '/v1/branding') {
+      if (method === 'GET') return (await adminService.getBranding(principal.accountId)) as unknown as T;
+      if (method === 'PUT') return (await adminService.saveBranding(principal.accountId, body as any)) as unknown as T;
     }
-    if (method === 'POST' && path.endsWith('/publish')) {
-      const parts = path.split('/');
-      const p3 = parts[3] || '';
-      return (await adminService.publishForm(principal.accountId, p3)) as unknown as T;
+    if (cleanPath.startsWith('/v1/branding/apply')) {
+      return { applied: (body as any)?.formIds ?? [] } as unknown as T;
     }
-    if (method === 'POST' && path.endsWith('/duplicate')) {
-      const parts = path.split('/');
-      const p3 = parts[3] || '';
-      return (await adminService.duplicateForm(principal.accountId, p3)) as unknown as T;
+    if (cleanPath.startsWith('/v1/branding/revert')) {
+      return { reverted: (body as any)?.formIds ?? [] } as unknown as T;
     }
-    if (method === 'DELETE' && path.startsWith('/v1/forms/') && path.split('/').length === 4) {
-      const parts = path.split('/');
-      const p3 = parts[3] || '';
-      return (await adminService.deleteForm(principal.accountId, p3)) as unknown as T;
+
+    // Notifications
+    if (cleanPath === '/v1/notifications') {
+      if (method === 'GET') return (await adminService.getNotifications(principal.accountId)) as unknown as T;
+      return { settings: [] } as unknown as T;
     }
-    if (method === 'GET' && (path === '/v1/workspaces' || path === '/v1/account/workspaces')) {
-      return (await adminService.listWorkspaces(principal)) as unknown as T;
+    if (cleanPath.startsWith('/v1/notifications/')) {
+      return { enabled: true } as unknown as T;
+    }
+
+    // Integrations
+    if (method === 'GET' && cleanPath === '/v1/integrations') {
+      return (await adminService.listIntegrations(principal.accountId)) as unknown as T;
+    }
+    if (method === 'GET' && cleanPath === '/v1/integrations/webhooks') {
+      return (await adminService.listAccountWebhooks(principal.accountId)) as unknown as T;
+    }
+    if (cleanPath.startsWith('/v1/integrations/hubspot')) {
+      return { enabled: false, reason: 'HubSpot not configured' } as unknown as T;
+    }
+    if (cleanPath.startsWith('/v1/integrations/calendly')) {
+      return { enabled: false, reason: 'Calendly not configured' } as unknown as T;
+    }
+
+    // Link Pages
+    if (method === 'GET' && cleanPath === '/v1/link-pages') {
+      return (await adminService.linkPages(principal.accountId)) as unknown as T;
+    }
+    if (method === 'GET' && cleanPath === '/v1/link-page') {
+      return (await adminService.linkPage(principal.accountId)) as unknown as T;
+    }
+
+    // Members & Invitations
+    if (method === 'GET' && cleanPath === '/v1/members') {
+      return (await adminService.listMembers(principal.accountId)) as unknown as T;
+    }
+    if (method === 'GET' && cleanPath === '/v1/invitations') {
+      return (await adminService.listInvitations(principal.accountId)) as unknown as T;
     }
   } catch (err: any) {
+    if (err instanceof ApiError) {
+      throw err;
+    }
     if (err?.message === 'UNAUTHENTICATED') {
       redirect('/login');
     }
@@ -130,12 +289,18 @@ async function req<T>(method: string, path: string, body?: unknown, opts: ReqOpt
   else if (session?.provider === 'local') headers['x-quill-email'] = session.email;
   if (workspace) headers['x-quill-workspace'] = workspace;
 
-  const res = await fetch(`${API_URL}${path}`, {
-    method,
-    headers: Object.keys(headers).length ? headers : undefined,
-    body: body ? JSON.stringify(body) : undefined,
-    cache: 'no-store',
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}${path}`, {
+      method,
+      headers: Object.keys(headers).length ? headers : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+      cache: 'no-store',
+    });
+  } catch (err: any) {
+    console.warn(`[adminApi fallback] Failed to fetch ${method} ${path} from ${API_URL}:`, err?.message || err);
+    throw new ApiError(503, `API endpoint ${method} ${path} unreachable: ${err?.message || 'Connection failed'}`);
+  }
   if (res.status === 401) {
     // Workos: leave the cookie alone. A render cannot write cookies (`set()`
     // and `delete()` both throw here), so the token exchange happens in the
@@ -451,7 +616,7 @@ export interface PendingInvitation {
   expiresAt: string | null;
 }
 
-export type { AnalyticsResponse, SubmissionsPage } from '@quill/types';
+export type { AnalyticsResponse, SubmissionsPage, SubmissionView } from '@quill/types';
 
 /**
  * The submissions filter the API reads (see `submissions/filters.ts`, which

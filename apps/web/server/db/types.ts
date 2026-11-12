@@ -64,6 +64,14 @@ export interface FormEventEntity {
   createdAt: number;
 }
 
+export interface FolderEntity {
+  id: string;
+  accountId: string;
+  name: string;
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface OutboxEntity {
   id: string;
   kind: 'email' | 'webhook' | 'hubspot' | 'booking_sync' | 'analytics' | 'dapta_sync';
@@ -133,12 +141,22 @@ export interface DataStore {
   // Submissions & Events
   saveSubmission(input: SaveSubmissionInput): Promise<SaveSubmissionResult>;
   listSubmissions(accountId: string, formId: string, opts?: ListSubmissionsOptions): Promise<SubmissionsPage>;
+  getSubmission(accountId: string, formId: string, submissionId: string): Promise<SubmissionEntity | null>;
+  deleteSubmission(accountId: string, submissionId: string): Promise<boolean>;
+  deleteSubmissions(accountId: string, formId: string, ids: string[]): Promise<number>;
   recordFormEvent(event: Omit<FormEventEntity, 'id' | 'createdAt'>): Promise<void>;
   getAnalytics(
     accountId: string,
     formId: string,
     range?: { from?: number; to?: number; tz?: string },
   ): Promise<AnalyticsResponse>;
+
+  // Folders
+  listFolders(accountId: string): Promise<FolderEntity[]>;
+  createFolder(accountId: string, name: string): Promise<FolderEntity>;
+  renameFolder(accountId: string, folderId: string, name: string): Promise<FolderEntity>;
+  deleteFolder(accountId: string, folderId: string): Promise<boolean>;
+  setFormFolder(accountId: string, formId: string, folderId: string | null): Promise<FormEntity>;
 
   // Outbox / Queue
   enqueueOutbox(item: Omit<OutboxEntity, 'id' | 'status' | 'attempts' | 'nextAttemptAt' | 'createdAt'>): Promise<string>;
